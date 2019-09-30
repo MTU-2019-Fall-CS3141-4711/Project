@@ -1,0 +1,33 @@
+{
+  "name": "youtwobe",
+  "version": "1.0.0",
+  "description": "Sychronized Video Viewing",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MTU-2019-Fall-CS3141-4711/Project.git"
+  },
+  "author": "CS3141-4711/FirebaseNS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MTU-2019-Fall-CS3141-4711/Project/issues"
+  },
+  "homepage": "https://github.com/MTU-2019-Fall-CS3141-4711/Project#readme",
+  "dependencies": {
+    "mithril": "^2.0.4"
+  },
+  "devDependencies": {
+    "jsdom": "^15.1.1",
+    "mithril-query": "^3.0.1",
+    "nyc": "^14.1.1",
+    "ospec": "^4.0.1",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
+  },
+  "scripts": {
+    "dev-start": "webpack js/router.js --output bin/app.js -d --watch --devtool source-map",
+    "build": "webpack js/router.js --output bin/app.js -p --devtool source-map",
+    "test": "echo \"Nothing Here Yet\"; exit 1;",
+    "test-coverage": "echo \"Nothing Here Yet\"; exit 1;"
+  }
+}
