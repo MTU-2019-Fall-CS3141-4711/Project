@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "jsdom": "^15.1.1",
+    "less": "^3.10.3",
     "mithril-query": "^3.0.1",
     "nyc": "^14.1.1",
     "ospec": "^4.0.1",
@@ -26,7 +27,9 @@
   },
   "scripts": {
     "dev-start": "webpack js/router.js --output bin/app.js -d --watch --devtool source-map",
-    "build": "webpack js/router.js --output bin/app.js -p --devtool source-map",
+    "build": "npm run-script build-web; npm run-script build-less",
+    "build-web": "webpack js/router.js --output bin/app.js -p --devtool source-map",
+    "build-less": "lessc style/style.less style.css",
     "test": "echo \"Nothing Here Yet\"; exit 1;",
     "test-coverage": "echo \"Nothing Here Yet\"; exit 1;"
   }
