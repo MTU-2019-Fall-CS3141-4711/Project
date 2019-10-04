@@ -1,7 +1,7 @@
 var m = require("mithril");
 
 var LandingPage = require("./views/LandingPage");
-var Room = require("./views/room.js");
+var Room = require("./views/Room");
 
 m.route(document.body, "/",{
     "/": LandingPage,
