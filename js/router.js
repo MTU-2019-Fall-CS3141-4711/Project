@@ -1,10 +1,10 @@
 var m = require("mithril");
 
-var Home = require("./views/home.js");
+var LandingPage = require("./views/LandingPage");
 var Room = require("./views/room.js");
 
 m.route(document.body, "/",{
-    "/": Home,
+    "/": LandingPage,
     "/:roomid": {
         render: (vnode) => {
             return m(Room, vnode.attrs);

@@ -1,0 +1,79 @@
+/*
+
+    Main import file for project.
+    This file doesn't contain any actual styling rules, just @import statements for 
+    the files that do contain styling rules.
+
+*/
+/*
+    General Less variables, mostly colors.
+*/
+/*@theme: {
+    background-primary:#1d1e22;     // Body background
+    elemental-primary: #393f4d;     // Subsection / element background
+    textual-primary: #feda6a;
+    general-accent: #d4d4dc;
+}*/
+/*
+    Styling for site-wide elements
+*/
+body {
+  margin: 0px;
+  background-color: #2C384A;
+}
+.VideoURLWrapper {
+  width: 50vw;
+  height: 80px;
+  margin: 30vh auto 0px auto;
+  background-color: #3f506a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+/*
+    Video URL Input Field
+    - Textbox, button, and the wrapper elements
+*/
+.VideoURLInput {
+  width: 50vw;
+  height: 60px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.VideoURLInput input[type=text] {
+  box-sizing: border-box;
+  width: 40vw;
+  height: 40px;
+  margin-right: 10px;
+  padding-left: 2px;
+  border: none;
+  border-radius: 4px;
+  font-size: 24px;
+}
+.VideoURLInput input[type=button] {
+  width: 80px;
+  height: 40px;
+  border: none;
+  border-radius: 4px;
+  background-color: #FF8A65;
+  cursor: pointer;
+  color: #FFF;
+  font-size: 18px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+}
+.RoomNavigation {
+  height: 8vh;
+  display: block;
+  background-color: #3f506a;
+}
+.RoomNavigation .RoomLabel {
+  margin: 2vh 0px 0px 1vh;
+  float: left;
+  font-size: 24px;
+  color: #FFF;
+}

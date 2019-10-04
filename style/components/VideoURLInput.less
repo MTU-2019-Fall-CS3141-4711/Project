@@ -1,0 +1,45 @@
+/*
+    Video URL Input Field
+    - Textbox, button, and the wrapper elements
+*/
+
+.VideoURLInput{
+    width: 50vw;
+    height: 60px;
+
+    margin:auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.VideoURLInput input[type=text]{
+    box-sizing: border-box;
+    width: 40vw;
+    height: 40px;
+    margin-right: 10px;
+    padding-left: 2px;
+
+    border: none;
+    border-radius: 4px;
+
+    font-size: 24px;
+}
+
+.VideoURLInput input[type=button]{
+    width: 80px;
+    height: 40px;
+
+    border: none;
+    border-radius: 4px;
+    
+    background-color: @theme[element-primary];
+    cursor: pointer;
+    
+    color: @theme[text-primary];
+    font-size:18px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
