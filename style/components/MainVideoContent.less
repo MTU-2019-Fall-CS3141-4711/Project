@@ -1,0 +1,35 @@
+.main-video-content{
+    display: inline-block;
+    vertical-align: top;
+    margin: 3.5vh 0px 0px 3.5vh;
+}
+
+    .main-video-content .video-player{
+        width: 1280px;
+        height: 720px;
+        
+        border-radius: 4px;
+
+        background-color: @theme[background-secondary];
+    }
+
+    .main-video-content .video-queue{
+        width: 1280px;
+        height: 400px;
+
+        margin-top: 3.5vh;
+        margin-bottom: 3.5vh;
+        border-radius: 4px;
+        overflow-y: auto;
+
+        background-color: @theme[background-secondary];
+    }
+
+        .main-video-content .video-queue .queued-video{
+            height: 60px;
+
+            margin-left: 4px;
+            margin-right: 4px;
+
+            border-bottom: 2px solid @theme[background-primary];
+        }
