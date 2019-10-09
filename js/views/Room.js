@@ -3,6 +3,7 @@ var m = require("mithril");
 var RoomNavigation = require("./components/VideoURLInput/RoomNavigation");
 var Toolbar = require("./components/Toolbar/Toolbar");
 var MainVideoContent = require("./components/MainVideoContent/MainVideoContent");
+var ChatBox = require("./components/ChatBox/ChatBox");
 
 /* 
     Video viewing room
@@ -25,7 +26,8 @@ var Room = {
             /* Generate the RoomNavigation vnode, passing it the /:roomid */
             m(RoomNavigation, {roomid: vnode.attrs.roomid}),
             m(Toolbar),
-            m(MainVideoContent)
+            m(MainVideoContent),
+            m(ChatBox)
 
         ]);
     }

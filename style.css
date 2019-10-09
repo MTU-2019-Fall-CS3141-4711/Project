@@ -128,6 +128,15 @@ body {
   margin-right: 4px;
   border-bottom: 2px solid #2C384A;
 }
+.chatbox {
+  display: inline-block;
+  width: 8vw;
+  height: 720px;
+  float: right;
+  margin-top: 3.5vh;
+  vertical-align: top;
+  background-color: #3f506a;
+}
 ::-webkit-scrollbar {
   width: 12px;
 }
