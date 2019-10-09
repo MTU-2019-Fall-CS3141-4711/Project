@@ -128,3 +128,22 @@ body {
   margin-right: 4px;
   border-bottom: 2px solid #2C384A;
 }
+::-webkit-scrollbar {
+  width: 12px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #2C384A;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #999999;
+  -webkit-box-shadow: inset 0 0 6px #2C384A;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: #3f506a;
+}
