@@ -5,7 +5,7 @@ var m = require("mithril");
 */
 var AnnotatedVideo = {
     view: () => {
-        return m("div", {class:"video-player"}, "Video!");
+        return m("div", {class:"video-player"}, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     }
 };
 

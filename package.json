@@ -15,6 +15,7 @@
   "homepage": "https://github.com/MTU-2019-Fall-CS3141-4711/Project#readme",
   "dependencies": {},
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "jsdom": "^15.1.1",
     "less": "^3.10.3",
     "less-watch-compiler": "^1.14.1",
