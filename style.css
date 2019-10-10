@@ -80,7 +80,7 @@ body {
 .toolbar {
   width: 3vw;
   min-width: 30px;
-  height: 720px;
+  height: 65vh;
   display: inline-block;
   margin-top: 3.5vh;
   background-color: #3f506a;
@@ -106,16 +106,18 @@ body {
   display: inline-block;
   vertical-align: top;
   margin: 3.5vh 0px 0px 3.5vh;
+  padding-left: 7vw;
+  padding-right: 7vw;
 }
 .main-video-content .video-player {
-  width: 1280px;
-  height: 720px;
+  width: 65vw;
+  height: 65vh;
   border-radius: 4px;
   background-color: #3f506a;
 }
 .main-video-content .video-queue {
-  width: 1280px;
-  height: 400px;
+  width: 65vw;
+  height: 15vh;
   margin-top: 3.5vh;
   margin-bottom: 3.5vh;
   border-radius: 4px;
@@ -127,15 +129,6 @@ body {
   margin-left: 4px;
   margin-right: 4px;
   border-bottom: 2px solid #2C384A;
-}
-.chatbox {
-  display: inline-block;
-  width: 8vw;
-  height: 720px;
-  float: right;
-  margin-top: 3.5vh;
-  vertical-align: top;
-  background-color: #3f506a;
 }
 ::-webkit-scrollbar {
   width: 12px;
@@ -155,4 +148,13 @@ body {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
   background: #3f506a;
+}
+.chatbox {
+  display: inline-block;
+  width: 16vw;
+  height: 83.5vh;
+  float: right;
+  margin-top: 3.5vh;
+  vertical-align: top;
+  background-color: #3f506a;
 }

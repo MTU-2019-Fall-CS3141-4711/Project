@@ -1,5 +1,4 @@
 let m = require("mithril");
-
 /* Button next to textbox to create viewing room */
 let SearchButton = {
 
