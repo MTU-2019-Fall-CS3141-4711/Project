@@ -11,9 +11,9 @@ var Toolbar = {
         return m("div", {class:"toolbar"},
             m("div", {class:"icon-wrapper"}, [
                 //TODO: Real tool icons
-                m(Icon,{icon:"S"}),
-                m(Icon,{icon:"P"}),
-                m(Icon,{icon:"E"})
+                m(Icon,{icon:"fas fa-mouse-pointer"}),
+                m(Icon,{icon:"fas fa-paint-brush"}),
+                m(Icon,{icon:"fas fa-eraser"})
             ])
         );
     }
