@@ -5,6 +5,8 @@ var Toolbar = require("./components/Toolbar/Toolbar");
 var MainVideoContent = require("./components/MainVideoContent/MainVideoContent");
 var ChatBox = require("./components/ChatBox/ChatBox");
 
+var YTVideIframe = require("../models/YTVideoIframe");
+
 /* 
     Video viewing room
     Contains:
@@ -19,7 +21,9 @@ var ChatBox = require("./components/ChatBox/ChatBox");
             - Video Queue
 */
 var Room = {
-
+    oncreate: () => {
+        YTVideIframe.generateVideo();
+    },
     view: (vnode) => {
         return m("section",{},[
 

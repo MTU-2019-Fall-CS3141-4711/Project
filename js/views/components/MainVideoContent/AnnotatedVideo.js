@@ -1,11 +1,13 @@
 var m = require("mithril");
 
+var YTVideoPlayer = require("./YTVideoPlayer");
+
 /*
     Video & Annotation Canvas
 */
 var AnnotatedVideo = {
     view: () => {
-        return m("div", {class:"video-player"}, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        return m(YTVideoPlayer);
     }
 };
 
