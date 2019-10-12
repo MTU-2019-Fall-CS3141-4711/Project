@@ -34,7 +34,13 @@
     "build-less": "lessc style/style.less style.css",
     "build-index": "copyfiles index.html bin/; replace-in-files --string='./bin/app.js' --replacement='./app.js' bin/index.html",
     "deploy": "npm run build; npm run-script build-index; copyfiles style.css bin/",
-    "test": "echo \"Nothing Here Yet\"; exit 1;",
-    "test-coverage": "echo \"Nothing Here Yet\"; exit 1;"
+    "test": "mocha --recursive --file test/test-setup.js",
+    "test-coverage": "nyc mocha --recursive"
+  },
+  "nyc":{
+    "all": true,
+    "include":[
+        "js/*"
+    ]
   }
 }
