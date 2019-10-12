@@ -15,6 +15,8 @@
   "homepage": "https://github.com/MTU-2019-Fall-CS3141-4711/Project#readme",
   "dependencies": {},
   "devDependencies": {
+    "copyfiles": "^2.1.1",
+    "replace-in-files-cli": "^0.3.0",
     "less": "^3.10.3",
     "less-watch-compiler": "^1.14.1",
     "mithril": "^2.0.4",
@@ -30,6 +32,8 @@
     "build": "npm run-script build-web; npm run-script build-less",
     "build-web": "webpack js/router.js --output bin/app.js -p --devtool source-map",
     "build-less": "lessc style/style.less style.css",
+    "build-index": "copyfiles index.html bin/; replace-in-files --string='./bin/app.js' --replacement='./app.js' bin/index.html",
+    "deploy": "npm run build; npm run-script build-index; copyfiles style.css bin/",
     "test": "echo \"Nothing Here Yet\"; exit 1;",
     "test-coverage": "echo \"Nothing Here Yet\"; exit 1;"
   }
