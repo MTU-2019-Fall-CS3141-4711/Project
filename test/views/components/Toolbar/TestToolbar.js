@@ -1,4 +1,3 @@
-var assert = require('assert');
 var mq = require("mithril-query");
 
 var Toolbar = require("../../../../js/views/components/Toolbar/Toolbar");
