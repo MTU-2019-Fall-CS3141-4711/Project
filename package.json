@@ -13,7 +13,9 @@
     "url": "https://github.com/MTU-2019-Fall-CS3141-4711/Project/issues"
   },
   "homepage": "https://github.com/MTU-2019-Fall-CS3141-4711/Project#readme",
-  "dependencies": {},
+  "dependencies": {
+    "youtube-player": "^5.5.2"
+  },
   "devDependencies": {
     "less": "^3.10.3",
     "less-watch-compiler": "^1.14.1",
