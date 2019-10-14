@@ -1,8 +1,15 @@
 var m = require("mithril");
 
+var ChatBoxMessage = require("./ChatBoxMessage");
+var ChatBoxButton = require("./ChatBoxButton");
+
 var ChatBox = {
     view: (vnode) => {
-        return m("div", {class:"chatbox"}, "test");
+        return m("section", {class:"chatbox"}, [
+            m(ChatBoxMessage),
+            m("textarea", {class: "chatboxtext"}),
+            m(ChatBoxButton)
+        ]);
     }
 };
 
