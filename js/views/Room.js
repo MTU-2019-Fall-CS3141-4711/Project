@@ -22,7 +22,9 @@ var YTVideIframe = require("../models/YTVideoIframe");
 */
 var Room = {
     oncreate: () => {
-        YTVideIframe.generateVideo();
+        YTVideIframe.enableDisplay();
+        YTVideIframe.loadVideo("M7lc1UVf-VE");
+        YTVideIframe.stopPlayer();
     },
     view: (vnode) => {
         return m("section",{},[

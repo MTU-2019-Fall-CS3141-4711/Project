@@ -1,16 +1,15 @@
 var m = require("mithril");
+var YT = require("youtube-player");
 
+/**
+ * @Docs https://www.npmjs.com/package/youtube-player
+ */
 var YTVideoFrame = {
-    CurrentVideo: null,
-    generateVideo:() =>{
-        console.log(YT.Player);
-        YTVideoFrame.CurrentVideo = new YT.Player('player', {
-            height: '390',
-            width: '640',
-            videoId: 'M7lc1UVf-VE',
-            events: {}
-        });
-    }
+    Player: null,
+    startPlayer: () => { Player.playVideo(); },
+    stopPlayer: () => { Player.stopVideo(); },
+    loadVideo: (videoID) => { Player.loadVideoById(videoID); },
+    enableDisplay : () => { Player = YT('player'); }
 }
 
 module.exports = YTVideoFrame;
