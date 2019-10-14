@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/MTU-2019-Fall-CS3141-4711/Project#readme",
   "dependencies": {
+    "jsdom": "^15.2.0",
     "youtube-player": "^5.5.2"
   },
   "devDependencies": {
@@ -21,8 +22,8 @@
     "less-watch-compiler": "^1.14.1",
     "mithril": "^2.0.4",
     "mithril-query": "^3.0.1",
+    "mocha": "^6.2.1",
     "nyc": "^14.1.1",
-    "ospec": "^4.0.1",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
   },
@@ -32,7 +33,13 @@
     "build": "npm run-script build-web; npm run-script build-less",
     "build-web": "webpack js/router.js --output bin/app.js -p --devtool source-map",
     "build-less": "lessc style/style.less style.css",
-    "test": "echo \"Nothing Here Yet\"; exit 1;",
-    "test-coverage": "echo \"Nothing Here Yet\"; exit 1;"
+    "test": "mocha --recursive --file test/test-setup.js",
+    "test-coverage": "nyc mocha --recursive"
+  },
+  "nyc":{
+    "all": true,
+    "include":[
+        "js/*"
+    ]
   }
 }
