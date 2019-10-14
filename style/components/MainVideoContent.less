@@ -29,6 +29,7 @@
     }
 
         .main-video-content .video-queue .queued-video{
+            display: flex;
             height: 60px;
 
             margin-left: 4px;
@@ -37,6 +38,14 @@
             border-bottom: 2px solid @theme[background-primary];
 
         }
+            .main-video-content .video-queue .queued-video img{
+                float: left;
+                padding-right: .5vw;
+            }
+            .main-video-content .video-queue .queued-video .queued-by{
+                align-self: flex-end;
+                justify-content: end;
+            }
         ::-webkit-scrollbar {
             width: 12px;
         }
