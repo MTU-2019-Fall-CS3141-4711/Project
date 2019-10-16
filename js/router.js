@@ -2,6 +2,7 @@ var m = require("mithril");
 
 var LandingPage = require("./views/LandingPage");
 var Room = require("./views/Room");
+var ChatBox = require("./views/components/ChatBox/ChatBox");
 
 /* 
     Choose our view(s) based on the URL route and 
