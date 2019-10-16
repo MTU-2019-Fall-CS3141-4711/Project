@@ -31,20 +31,25 @@
         .main-video-content .video-queue .queued-video{
             display: flex;
             height: 60px;
-
             margin-left: 4px;
             margin-right: 4px;
-
+            color: darken(@theme[text-primary], 10);
             border-bottom: 2px solid @theme[background-primary];
 
         }
             .main-video-content .video-queue .queued-video img{
                 float: left;
-                padding-right: .5vw;
+                margin-right: .5vw;
+                margin-top: 1.5px;
+                margin-bottom: 1.5px;
+                border: 2.5px solid lighten(black, 20);
             }
-            .main-video-content .video-queue .queued-video .queued-by{
-                align-self: flex-end;
-                justify-content: end;
+
+            .main-video-content .video-queue .queued-video .text-container{
+
+            }
+            .main-video-content .video-queue .queued-video .text-container .queued-by{
+                margin-top: 20%;
             }
         ::-webkit-scrollbar {
             width: 12px;

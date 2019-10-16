@@ -8,11 +8,13 @@ var m = require("mithril");
 var QueuedVideo = {
     view: () => {
         return m("div", {class: "queued-video"},[
-            m("img", {
-                "src":"https://img.youtube.com/vi/dQw4w9WgXcQ/sddefault.jpg","alt":"Queued Video","height":"60","width":"60"
+            m("img", { // contains the image 
+                "src":"https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg","alt":"Queued Video","height":"52","width":"92.44"
             }),
-            m("div",{class: "video-title"} ,"Queued Video!"),
-            m("div",{class: "queued-by"} ,"Queued by John Doe")
+            m("div", {"class":"text-container"},[ // contains the following two text elements
+                m("div", {"class":"video-title"}, "Queued Video!"),
+                m("div", {"class":"queued-by"}, "Queued By!")
+            ])
         ]);
     }
 }
