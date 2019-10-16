@@ -7,7 +7,12 @@ var YTVideoPlayer = require("./YTVideoPlayer");
 */
 var AnnotatedVideo = {
     view: () => {
-        return m(YTVideoPlayer);
+        return [ m("canvas", {
+                class: "annotation-canvas",
+                onclick: (e) => {console.log("clicked");}
+            }), 
+            m(YTVideoPlayer) 
+        ];
     }
 };
 
