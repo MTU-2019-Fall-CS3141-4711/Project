@@ -1,7 +1,7 @@
 var jsdom = require("jsdom");
 
 // Create a fake DOM to render & test
-dom = new jsdom.JSDOM("<!DOCTYPE HTML><html><head></head><body></body></html>", {
+dom = new jsdom.JSDOM("<!DOCTYPE HTML><html><head></head><body><div id='player'></div></body></html>", {
     pretendToBeVisual:true
 });
 
