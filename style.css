@@ -153,10 +153,22 @@ body {
   background-color: #3f506a;
 }
 .main-video-content .video-queue .queued-video {
+  display: flex;
   height: 60px;
   margin-left: 4px;
   margin-right: 4px;
+  color: #e6e6e6;
   border-bottom: 2px solid #2C384A;
+}
+.main-video-content .video-queue .queued-video img {
+  float: left;
+  margin-right: 0.5vw;
+  margin-top: 1.5px;
+  margin-bottom: 1.5px;
+  border: 2.5px solid #333333;
+}
+.main-video-content .video-queue .queued-video .text-container .queued-by {
+  margin-top: 14%;
 }
 .chatbox {
   width: 16vw;
