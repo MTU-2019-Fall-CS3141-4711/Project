@@ -1,8 +1,14 @@
 var m = require("mithril");
 
 var VideoURLInput = require("./VideoURLInput");
+var VideoQueue = require("./../MainVideoContent/VideoQueue");
+var TextBox = require("./Textbox");
 
-let AddToQueue = {
+function AddToQueue(ytURL, user){
+    return 
+}
+
+let QueueButton = {
 
     view: (vnode) =>{
     
@@ -12,8 +18,8 @@ let AddToQueue = {
             /* Button Text */
             value:"Queue!",
             onclick: () => {
-                console.log(vnode.attrs.icon + " was clicked");
-                
+                //console.log("queueueueueueue was clicked");
+                VideoQueue.enqueue("Video Title", "Queued by: Username");
             
             }
 
@@ -21,4 +27,4 @@ let AddToQueue = {
     
     }
 }
-module.exports = AddToQueue;
+module.exports = QueueButton;
