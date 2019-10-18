@@ -4,21 +4,33 @@
     margin: 3.5vh 7vw 0px 7vw;
 }
 
+    .main-video-content .annotation-canvas{
+        width:65vw;
+        height: 65vh;
+    }
+
     .main-video-content .video-player{
         width: 65vw;
         height: 65vh;
         
+        position: absolute;
+        top: 11.5vh;
+
         border-radius: 4px;
         
         background-color: @theme[background-secondary];
+    }
+
+    #player{
+        width: 65vw;
+        height: 65vh;
+        pointer-events: none;
     }
 
     .main-video-content .video-queue{
         width: 65vw;
         height: 15vh;
 
-
-        
         margin-top: 3.5vh;
         margin-bottom: 3.5vh;
         border-radius: 4px;
@@ -51,24 +63,3 @@
             .main-video-content .video-queue .queued-video .text-container .queued-by{
                 margin-top: 14%;
             }
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-         
-        /* Track */
-        ::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px @theme[background-primary]; 
-            -webkit-border-radius: 10px;
-            border-radius: 10px;
-        }
-         
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-            -webkit-border-radius: 10px;
-            border-radius: 10px;
-            background: darken(@theme[text-primary], 40%);
-            -webkit-box-shadow: inset 0 0 6px @theme[background-primary];  
-        }
-        ::-webkit-scrollbar-thumb:window-inactive {
-            background:@theme[background-secondary]; 
-        }
