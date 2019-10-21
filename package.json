@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/MTU-2019-Fall-CS3141-4711/Project#readme",
   "dependencies": {
+    "firebase": "^7.2.1",
     "jsdom": "^15.2.0",
     "youtube-player": "^5.5.2"
   },
@@ -40,10 +41,10 @@
     "test": "mocha --recursive --file test/test-setup.js",
     "test-coverage": "nyc mocha --recursive"
   },
-  "nyc":{
+  "nyc": {
     "all": true,
-    "include":[
-        "js/*"
+    "include": [
+      "js/*"
     ]
   }
 }
