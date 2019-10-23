@@ -7,9 +7,11 @@ var TextBox = require("./Textbox");
 function AddToQueue(ytURL, user){
     return 
 }
-
+var title="";
 let QueueButton = {
-
+    setTitle: (value) =>{
+        title = value;
+    },
     view: (vnode) =>{
     
         /* Create an input field of type button */
@@ -19,7 +21,7 @@ let QueueButton = {
             value:"Queue!",
             onclick: () => {
                 //console.log("queueueueueueue was clicked");
-                VideoQueue.enqueue("Video Title", "Queued by: Username");
+                VideoQueue.enqueue(title, "Queued by: Username");
             
             }
 
