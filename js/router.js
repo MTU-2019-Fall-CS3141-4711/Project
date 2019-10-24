@@ -9,10 +9,10 @@ Firebase.initializeApp({
     projectId: 'youtwobe-video-viewer'
 });
 
+var RoomState = require("./models/RoomState");
 var User = require("./models/User");
 
 var LandingPage = require("./views/LandingPage");
-var LoadingPage = require("./views/LoadingPage");
 var Room = require("./views/Room");
 
 /* 
@@ -24,12 +24,41 @@ var Room = require("./views/Room");
 */
 m.route(document.body, "/",{
     "/": LandingPage,
+    "/new": {
+        render: (vnode) => {
+
+            // Make sure user is authenticated so we can track their usage
+            if(User.isUserSignedIn()){
+                //Create the room and redirect when done
+                RoomState.createNew().then( () => {
+                    m.route.set("/" + RoomState.Room_ID);
+                    return;
+                }).catch( (err) => {
+                    console.log("Error creating room");
+                });
+            // Login the user
+            }else{
+                User.signIn().then( () => {
+                    // Re render the page witch shoulds end us to true in this conditional
+                    m.redraw();
+                    return;
+                }).catch( (error) =>{
+                    console.log(error);
+                });
+            }
+
+            // Show a pretty loading page while we wait
+            return m(LoadingPage);
+
+        }
+    },
     "/:roomid": {
         render: (vnode) => {
 
             if(!User.isUserSignedIn()){
                m.route.set("/" + vnode.attrs.roomid + "/loading");
             }
+            RoomState.constructExisting(vnode.attrs.roomid);
             User.construct();
             
             /* Render the Room view, passing the :roomid as a parameter */
