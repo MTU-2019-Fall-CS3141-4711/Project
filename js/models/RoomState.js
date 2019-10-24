@@ -3,7 +3,7 @@ var Firebase = require ("firebase/app");
 require("firebase/firestore");
 
 var RoomState = {
-    Room_ID: null,
+    Room_ID: "48CslEq1R9dPuFIXbjCC",
     construct: (vnode) => {
         RoomState.Room_ID = vnode.attrs.Room_ID;
         Firebase.firestore().collection("room").doc(RoomState.Room_ID).get()

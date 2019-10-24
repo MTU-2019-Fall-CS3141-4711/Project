@@ -14,7 +14,8 @@ var User = require("./models/User");
 var LandingPage = require("./views/LandingPage");
 var LoadingPage = require("./views/LoadingPage");
 var Room = require("./views/Room");
-
+var Chat = require("./models/Chat");
+Chat.construct();
 /* 
     Choose our view(s) based on the URL route and 
     mount it to the body.

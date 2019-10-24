@@ -5,6 +5,7 @@ var ChatBoxButton = require("./ChatBoxButton");
 var ChatList = require("./ChatList");
 var ChatTabButton = require("./ChatTabButton");
 var ChatListTabButton = require("./ChatListTabButton");
+var ChatBoxText = require("./ChatBoxText");
 
 var ChatBox = {
     ChatTab: true,
@@ -15,7 +16,7 @@ var ChatBox = {
                 m(ChatTabButton),
                 m(ChatListTabButton),
                 m(ChatBoxMessage),
-                m("textarea", {class: "chatboxtext"}),
+                m(ChatBoxText),
                 m(ChatBoxButton)
             ]);
         }
@@ -24,7 +25,7 @@ var ChatBox = {
                 m(ChatTabButton),
                 m(ChatListTabButton),
                 m(ChatList),
-                m("textarea", {class:"chatboxtext"}),
+                m(ChatBoxText),
                 m(ChatBoxButton)
             ]);
         }
