@@ -1,20 +1,20 @@
 var Firebase = require("firebase/app");
 require("firebase/auth");
 
-var User = {
-    User: null,
+var Session = {
+    Session: null,
     construct: () =>{
-        User.User = Firebase.auth().currentUser;
+        Session.Session = Firebase.auth().currentUser;
     },
-    isUserSignedIn: () => {
+    isInitialized: () => {
         return (Firebase.auth().currentUser != null);
     },
-    signIn: () => {
+    start: () => {
         return new Promise(function(resolve, reject){
             Firebase.auth().signInAnonymously()
             .then( (UserCredential) => {
                 
-                User.User = UserCredential.User;
+                Session.Session = UserCredential.User;
                 resolve();
 
             }).catch( (error) =>{
@@ -27,4 +27,4 @@ var User = {
 
 }
 
-module.exports = User;
+module.exports = Session;
