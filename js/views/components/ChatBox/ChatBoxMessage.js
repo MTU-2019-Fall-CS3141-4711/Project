@@ -5,8 +5,13 @@ var ChatBox = require("./ChatBox");
 var ChatMessage = require("./ChatMessage");
 
 var ChatBoxMessage = {
+    messageHistory: [],
     view: (vnode) => {
-        return m("div", {class: "chatboxmessage"}, ChatMessage);
+        return m("div", {class: "chatboxmessage"},
+            ChatBoxMessage.messageHistory.map( (i) => {
+                return m(ChatMessage, {message: i})
+            })
+        );
     }
     
 };

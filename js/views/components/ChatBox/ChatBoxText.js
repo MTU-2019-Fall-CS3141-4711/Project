@@ -7,7 +7,6 @@ var ChatBoxText = {
     view: (vnode) => {
         return m("textarea", {class:"chatboxtext", 
         onkeyup: (e) => {
-            console.log(e.target.value);
             ChatBoxText.ChatMessage = e.target.value;
         }
     });
