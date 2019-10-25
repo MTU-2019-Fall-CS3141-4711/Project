@@ -29,6 +29,7 @@ var RoomState = {
         return new Promise( (resolve, reject) =>{
             // Create the room with default attributes
             Firebase.firestore().collection("room").add({
+                latest_message: "",
                 queue: [],
                 is_playing: false,
                 playback_time: 0,
@@ -37,11 +38,6 @@ var RoomState = {
                 // Add a users subcollection with one user in it
                 docRefence.collection("users").add({
                     display_name: "Foo Bar"
-                }).then( () => {} ).catch( (err)=> { console.log(err); });
-
-                // Create a document for messages
-                docRefence.collection("chat_messages").doc("messages").set({
-                    messages: []
                 }).then( () => {} ).catch( (err)=> { console.log(err); });
 
                 // Get the generated ID and store it

@@ -16,7 +16,6 @@ var LandingPage = require("./views/LandingPage");
 var LoadingPage = require("./views/LoadingPage");
 var Room = require("./views/Room");
 var Chat = require("./models/Chat");
-Chat.construct();
 /* 
     Choose our view(s) based on the URL route and 
     mount it to the body.
@@ -76,6 +75,7 @@ m.route(document.body, "/",{
                 sessionSetup().then( () => {
                     // User is signed in, construct existing room
                     RoomState.constructExisting(vnode.attrs.roomid);
+                    Chat.construct();
                     m.redraw();
     
                 }).catch(() => {
