@@ -8,7 +8,7 @@ var RoomState = require("./../../../models/RoomState");
 var message;
 
 var ChatBoxButton = {
-    view: (vnode) => {
+    view: () => {
         return m("input[type=button]", {class:"chatboxbutton", value: "Enter",
             onclick: () => {
                 console.log("Enter was clicked");
