@@ -40,7 +40,7 @@
     "build-index": "copyfiles index.html bin/; replace-in-files --string='./bin/app.js' --replacement='./app.js' bin/index.html",
     "deploy": "npm run build; npm run-script build-index; copyfiles style.css bin/",
     "test": "mocha --recursive --file test/test-setup.js",
-    "test-coverage": "nyc mocha --recursive"
+    "test-coverage": "nyc mocha --recursive --file test/test-setup.js"
   },
   "nyc": {
     "all": true,
