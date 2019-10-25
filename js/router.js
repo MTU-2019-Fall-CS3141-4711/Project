@@ -38,7 +38,12 @@ m.route(document.body, "/",{
                 // Create a session if they doesn't exist
                 sessionSetup().then( () => {
                     RoomState.createNew().then( () => {
-    
+                        
+                        /**
+                         * TO PUT HERE: Construct Firestore snapshot listeners
+                         */
+
+
                         // Send the user to the room once it's ready
                         m.route.set("/" + RoomState.Room_ID);
                         return;
