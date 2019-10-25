@@ -15,7 +15,6 @@ var Session = require("./models/Session");
 var LandingPage = require("./views/LandingPage");
 var LoadingPage = require("./views/LoadingPage");
 var Room = require("./views/Room");
-var Chat = require("./models/Chat");
 /* 
     Choose our view(s) based on the URL route and 
     mount it to the body.
@@ -38,11 +37,6 @@ m.route(document.body, "/",{
                 // Create a session if they doesn't exist
                 sessionSetup().then( () => {
                     RoomState.createNew().then( () => {
-                        
-                        /**
-                         * TO PUT HERE: Construct Firestore snapshot listeners
-                         */
-
 
                         // Send the user to the room once it's ready
                         m.route.set("/" + RoomState.Room_ID);
@@ -69,13 +63,11 @@ m.route(document.body, "/",{
             // Check if user has session
             if(Session.isInitialized()){
                 // Render the room if they have a session
-                return m(Room, vnode.attrs);
+                return m(Room, {roomid: vnode.attrs.roomid});
 
             }else{
                 sessionSetup().then( () => {
-                    // User is signed in, construct existing room
-                    RoomState.constructExisting(vnode.attrs.roomid);
-                    Chat.construct();
+                    // User is signed in, trigger re-render which will route to room generation
                     m.redraw();
     
                 }).catch(() => {
@@ -84,29 +76,6 @@ m.route(document.body, "/",{
                 });
 
             }
-
-            // Display loading page if user has no session
-            return m(LoadingPage);
-        }
-    },
-    "/:roomid/loading": {
-        render: (vnode) => {
-            // Check if user has session
-            if(Session.isInitialized()){
-                // Send them back to room if they do
-                m.route.set("/" + vnode.roomid);
-                return;
-            }
-
-            // Create one if they don't
-            sessionSetup().then( () => {
-                // Send them back to room when the session is ready
-                m.route.set("/" + vnode.roomid);
-                return;
-
-            }).catch(() => {
-                // TODO: Return an error page
-            });
 
             // Display loading page if user has no session
             return m(LoadingPage);
