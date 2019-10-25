@@ -18,7 +18,9 @@ var Chat = {
         });
     },
     sendMessage: (message) => {
-        // send message, grab user id from User object
+        Firebase.firestore().collection("room").doc(RoomState.Room_ID).update({
+            latest_message: message
+        });
     }
 
 }
