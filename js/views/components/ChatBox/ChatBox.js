@@ -1,3 +1,7 @@
+/**
+ * This is the entire chat box component on the Room page
+ */
+
 var m = require("mithril");
 
 var ChatBoxMessage = require("./ChatBoxMessage");
