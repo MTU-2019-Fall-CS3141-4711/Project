@@ -1,11 +1,8 @@
 var m = require("mithril");
-var Firebase = require("firebase/app");
-
-var ChatBoxMessage = require("./ChatBoxMessage");
 
 var ChatMessage = {
     view: (vnode) => {
-        return m("div", {}, vnode.attrs.message);
+        return m("div", {class:"chat_line"}, vnode.attrs.message);
     }
 }
 

@@ -1,3 +1,7 @@
+/**
+ * This is the entire chat box component on the Room page
+ */
+
 var m = require("mithril");
 
 var ChatBoxMessage = require("./ChatBoxMessage");
@@ -10,7 +14,7 @@ var ChatBoxText = require("./ChatBoxText");
 var ChatBox = {
     ChatTab: true,
     view: (vnode) => {
-        //console.log(ChatBox.ChatTab);
+
         if (ChatBox.ChatTab) {
             return m("section", {class:"chatbox"}, [
                 m(ChatTabButton),
@@ -29,10 +33,6 @@ var ChatBox = {
                 m(ChatBoxButton)
             ]);
         }
-    },
-    setChatList: function () {
-        ChatBox.ChatTab = false;
-        console.log("It ran the function." + ChatBox.ChatTab);
     }
 };
 module.exports = ChatBox;
