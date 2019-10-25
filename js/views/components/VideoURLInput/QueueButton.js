@@ -2,11 +2,10 @@ var m = require("mithril");
 
 var VideoURLInput = require("./VideoURLInput");
 var VideoQueue = require("./../MainVideoContent/VideoQueue");
-var TextBox = require("./Textbox");
 
 
+var targ = null;
 var title="";
-var targ=TextBox;
 let QueueButton = {
     setTitle: (value) =>{
         title = value;
@@ -24,11 +23,8 @@ let QueueButton = {
             onclick: (e) => {
                 //console.log("queueueueueueue was clicked");
                 VideoQueue.enqueue(title, "Queued by: Username");
-                if(targ!=null){
-                    console.log(targ+"\n"+targ.value);
-                    
-                    TextBox.clear(targ);
-                }
+                var TextBox = require("./Textbox"); // THANKS WILL
+                TextBox.clear(targ);
             },
             /*
                 onKeyPress ---- Keycode == 13

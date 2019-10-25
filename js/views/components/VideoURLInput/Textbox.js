@@ -6,9 +6,9 @@ var ev = null;
 
 /* Textbox at top of page for video URL */
 let Textbox = {
-    clear: (event) =>{
-        console.log(event.value);
-        event.value="";
+    clear: (eventTarget) =>{
+        console.log(eventTarget.value);
+        eventTarget.value="";
         m.redraw();
     },
     setEvent: (event)=>{
@@ -30,6 +30,7 @@ let Textbox = {
             onkeypress: function (e) {
                 if(e.keyCode==13){
                     //console.log("Enter was hit");
+                    console.log(e+" "+ e.target+" "+e.target.value);
                     QueueButton.setTarg(e.target);
                     VideoQueue.enqueue(e.target.value, "Queued by: Username");
                     Textbox.clear(e.target);

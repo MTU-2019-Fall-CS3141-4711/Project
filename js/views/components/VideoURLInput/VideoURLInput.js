@@ -9,10 +9,10 @@ let QueueButton = require("./QueueButton")
     viewing room to watch the video
 */
 function onLandingPage(){
-      if(window.location.hash==""){
+      if(window.location.hash==""){ // checks whether the URL has a '#'
           return m(SearchButton);
       }else{
-          return m(QueueButton);
+          return m(QueueButton); 
       }
 }
 //console.log(onLandingPage());
@@ -22,7 +22,6 @@ let VideoURLInput = {
             m("", {class:"wrapper"},[
                 /* Create vnodes for the textbox and search button */
                 m(Textbox),
-                //m(SearchButton)
                 onLandingPage()
             ])
         );
