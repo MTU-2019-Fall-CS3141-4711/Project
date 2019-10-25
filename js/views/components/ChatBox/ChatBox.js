@@ -9,7 +9,7 @@ var ChatListTabButton = require("./ChatListTabButton");
 var ChatBox = {
     ChatTab: true,
     view: (vnode) => {
-        console.log(ChatBox.ChatTab);
+        //console.log(ChatBox.ChatTab);
         if (ChatBox.ChatTab) {
             return m("section", {class:"chatbox"}, [
                 m(ChatTabButton),

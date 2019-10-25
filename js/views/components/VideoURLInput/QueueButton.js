@@ -4,13 +4,15 @@ var VideoURLInput = require("./VideoURLInput");
 var VideoQueue = require("./../MainVideoContent/VideoQueue");
 var TextBox = require("./Textbox");
 
-function AddToQueue(ytURL, user){
-    return 
-}
+
 var title="";
+var targ=TextBox;
 let QueueButton = {
     setTitle: (value) =>{
         title = value;
+    },
+    setTarg: (value) =>{
+        targ = value;
     },
     view: (vnode) =>{
     
@@ -19,11 +21,19 @@ let QueueButton = {
             
             /* Button Text */
             value:"Queue!",
-            onclick: () => {
+            onclick: (e) => {
                 //console.log("queueueueueueue was clicked");
                 VideoQueue.enqueue(title, "Queued by: Username");
-            
-            }
+                if(targ!=null){
+                    console.log(targ+"\n"+targ.value);
+                    
+                    TextBox.clear(targ);
+                }
+            },
+            /*
+                onKeyPress ---- Keycode == 13
+            */
+           
 
         });
     

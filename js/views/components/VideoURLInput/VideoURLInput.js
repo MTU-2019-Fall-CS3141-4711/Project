@@ -15,7 +15,7 @@ function onLandingPage(){
           return m(QueueButton);
       }
 }
-console.log(onLandingPage());
+//console.log(onLandingPage());
 let VideoURLInput = {
     view: ()=>{
         return m("", {class:"VideoURLInput"},
