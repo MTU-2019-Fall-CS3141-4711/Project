@@ -11,7 +11,7 @@ function urlsplitter(YTUrl){
     if(YTUrl==null){
         return "YouTube ID is undefined";
     }
-    if(YTUrl.includes("youtu.be/")){                //DON'T FORGET THE '/'
+    else if(YTUrl.includes("youtu.be/")){                //DON'T FORGET THE '/'
         //console.log("contains .be/");
        var idArray = YTUrl.split('be/');
     }else if(YTUrl.includes("?v=")){
@@ -22,10 +22,11 @@ function urlsplitter(YTUrl){
     }
    
     var video_id = idArray[1];                      // takes everything past 'v=' or be/
-
+    
     //console.log(video_id+"\n");
 
     var ampersandPosition = video_id.indexOf('&');  // if there's an ampersand, we stop at the ampersand
+    console.log(video_id + ": " + ampersandPosition);
     //console.log(video_id+"\n"+ampersandPosition);
     if(ampersandPosition != -1) {
         video_id = video_id.substring(0, ampersandPosition);
@@ -55,6 +56,9 @@ var QueuedVideo = {
         user = vnode.attrs.queueUser;
         return m("div", {class: "queued-video"},[
             m("img", { // contains the image 
+                /*
+                    if YouTube video isn't defined, then it will desplay the default gray YouTube "thumbnail not found" thumbnail
+                 */
                 "src":"https://i.ytimg.com/vi/"+videoID+"/mqdefault.jpg","alt":"Queued Video","height":"52","width":"92.44"
             }),
             m("div", {"class":"text-container"},[ // contains the following two text elements
