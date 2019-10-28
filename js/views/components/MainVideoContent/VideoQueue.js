@@ -19,6 +19,13 @@ var VideoQueue = {
         newqueue.user = user;
         return videoArray.push(newqueue);
     },
+    dequeue: ()=>{
+
+    },
+    clearQueue: ()=>{
+        videoArray = [];
+        return videoArray;
+    },
     view: () => {
         return m("div", {class:"video-queue"}, videoArray);
     }

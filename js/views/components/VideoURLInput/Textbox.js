@@ -30,6 +30,11 @@ let Textbox = {
             onkeypress: function (e) {
                 if(e.keyCode==13){
                     //console.log("Enter was hit");
+                    if(e.target.value.toLowerCase()=="/clear"){
+                        var Queue = require("./../../../models/Queue");
+                        Queue.clearQueue();
+                        VideoQueue.clearQueue();
+                    }
                     console.log(e+" "+ e.target+" "+e.target.value);
                     QueueButton.setTarg(e.target);
                     VideoQueue.enqueue(e.target.value, "Queued by: Username");

@@ -50,9 +50,18 @@ function urlsplitter(YTUrl){
  * TODO: get YouTube data API
  * To get the YT title (and description) we need to use the data api
  */
+var videoURL = "";
 var QueuedVideo = {
     view: (vnode) => {
         videoID = urlsplitter(vnode.attrs.videoTitle);
+        videoURL = "https://www.youtube.com/watch?v="+videoID;
+        
+        if(videoID.length!=11){
+            return; // if ID is in any way, invalid, we do not do anything.
+        }else{
+            var Queue = require("./../../../models/Queue");
+            Queue.enqueue(videoURL);
+        }
         user = vnode.attrs.queueUser;
         return m("div", {class: "queued-video"},[
             m("img", { // contains the image 

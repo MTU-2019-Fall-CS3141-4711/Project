@@ -24,6 +24,11 @@ let QueueButton = {
                 //console.log("queueueueueueue was clicked");
                 VideoQueue.enqueue(title, "Queued by: Username");
                 var TextBox = require("./Textbox"); // THANKS WILL
+                if(title.toLowerCase()=="/clear"){
+                    var Queue = require("./../../../models/Queue");
+                    Queue.clearQueue();
+                    VideoQueue.clearQueue();
+                }
                 TextBox.clear(targ);
             },
             /*
