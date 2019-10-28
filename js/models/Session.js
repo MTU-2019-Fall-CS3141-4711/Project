@@ -9,6 +9,9 @@ var Session = {
     isInitialized: () => {
         return (Firebase.auth().currentUser != null);
     },
+    getUid: () => {
+        return Session.Session.uid;
+    },
     start: () => {
         return new Promise(function(resolve, reject){
             Firebase.auth().signInAnonymously()
