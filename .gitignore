@@ -2,3 +2,5 @@ node_modules
 bin
 .nyc_output
 style.css
+firebase-debug.log
+.firebaserc
