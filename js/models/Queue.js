@@ -3,9 +3,10 @@ let m = require("mithril");
 var arrayQueue = [];
 
 var Queue = {
-    enqueue: (URL) =>{
-        arrayQueue.push(URL);
-        console.log("Queued URL: "+URL + "\nCurrent Queue: "+arrayQueue.toString());
+    enqueue: (URL, User) =>{
+        var UserURLTuple = [URL, User];
+        arrayQueue.push(UserURLTuple);
+        console.log("Queued URL: "+URL + "\nCurrent Queue: "+arrayQueue.toString()+"\nQueued By: "+User);
         return arrayQueue;
     },
 

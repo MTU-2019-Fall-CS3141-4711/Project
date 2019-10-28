@@ -37,7 +37,7 @@ let Textbox = {
                     }
                     console.log(e+" "+ e.target+" "+e.target.value);
                     QueueButton.setTarg(e.target);
-                    VideoQueue.enqueue(e.target.value, "Queued by: Username");
+                    VideoQueue.enqueue(e.target.value, "Username"); // TODO: pull username from firebase
                     Textbox.clear(e.target);
                 }
             },
