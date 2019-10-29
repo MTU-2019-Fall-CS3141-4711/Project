@@ -15,7 +15,6 @@
   "homepage": "https://github.com/MTU-2019-Fall-CS3141-4711/Project#readme",
   "dependencies": {
     "firebase": "^7.2.1",
-    "firebase-tools": "^7.6.1",
     "jsdom": "^15.2.0",
     "youtube-player": "^5.5.2"
   },
