@@ -1,6 +1,9 @@
 let m = require("mithril");
 let Firebase = require("firebase/app");
 let RoomState = require("./RoomState");
+var VideoQueue = require("./../views/components/MainVideoContent/VideoQueue");
+        
+
 var arrayQueue = [];
 
 // Firebase.firestore().collection("room").doc(RoomState.Room_ID)
@@ -9,7 +12,12 @@ var Queue = {
     construct: () => {
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
         .onSnapshot((doc) => {
-            arrayQueue.push(doc.data().queue);
+            var fbQueue = doc.data().queue;
+            arrayQueue.push(fbQueue);
+            VideoQueue.clearQueue();
+            fbQueue.forEach(function(element){
+                Queue.enqueue(element.queueURL, element.queueUser);
+            });
             console.log("construct called\nArrayQueue: "+arrayQueue.toLocaleString());
             m.redraw();
         });
@@ -26,7 +34,6 @@ var Queue = {
         Firebase.firestore().collection("room").doc(RoomState.Room_ID).update({
             queue: Firebase.firestore.FieldValue.arrayUnion(UserURLTuple)
         });
-        var VideoQueue = require("./../views/components/MainVideoContent/VideoQueue");
         
         VideoQueue.enqueue(UserURLTuple.queueURL, UserURLTuple.queueUser);
         //console.log("Queued URL: "+URL + "\nCurrent Queue: " + arrayQueue.length +" "+arrayQueue.toLocaleString()+"\nQueued By: "+User);
