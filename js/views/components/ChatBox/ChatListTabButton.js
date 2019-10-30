@@ -5,10 +5,7 @@ var ChatListTabButton = {
         return m("input[type=button]", {class: "chatlisttabbutton", value: "Users!", 
             onclick: () => {
                 var ChatBox = require("./ChatBox");
-                console.log(ChatBox);
-                // This variable controls the visibility of the user list.
-                ChatBox.setChatList();
-               //return ChatBox.ChatTab;
+                ChatBox.ChatTab = false;
             }
         });
     }

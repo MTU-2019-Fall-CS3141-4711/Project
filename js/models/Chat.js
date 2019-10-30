@@ -17,15 +17,13 @@ var Chat = {
         });
     },
     sendMessage: (message) => {
-<<<<<<< Updated upstream
+
         // send message, grab user id from User object
-=======
         var Session = require("../models/Session");
         userID = Session.getUid();
         Firebase.firestore().collection("room").doc(RoomState.Room_ID).update({
             latest_message: userID+":"+" "+message
         });
->>>>>>> Stashed changes
     }
 
 }

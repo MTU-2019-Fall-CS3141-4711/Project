@@ -1,5 +1,8 @@
 var m = require("mithril");
 
+var RoomState = require("./../models/RoomState");
+var Chat = require("./../models/Chat");
+
 var RoomNavigation = require("./components/VideoURLInput/RoomNavigation");
 var Toolbar = require("./components/Toolbar/Toolbar");
 var MainVideoContent = require("./components/MainVideoContent/MainVideoContent");
@@ -21,6 +24,11 @@ var YTVideIframe = require("../models/YTVideoIframe");
             - Video Queue
 */
 var Room = {
+    oninit: (vnode) => {
+        RoomState.constructExisting(vnode.attrs.roomid);
+        Chat.construct();
+        console.log("Snapshot Listeners Initialized!");
+    },
     oncreate: () => {
         YTVideIframe.enableDisplay();
         YTVideIframe.loadVideo("M7lc1UVf-VE");
