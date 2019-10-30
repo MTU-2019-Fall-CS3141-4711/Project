@@ -26,7 +26,7 @@ function urlsplitter(YTUrl){
     //console.log(video_id+"\n");
 
     var ampersandPosition = video_id.indexOf('&');  // if there's an ampersand, we stop at the ampersand
-    console.log(video_id + ": " + ampersandPosition);
+    //console.log(video_id + ": " + ampersandPosition);
     //console.log(video_id+"\n"+ampersandPosition);
     if(ampersandPosition != -1) {
         video_id = video_id.substring(0, ampersandPosition);
@@ -53,14 +53,13 @@ function urlsplitter(YTUrl){
 var videoURL = "";
 var QueuedVideo = {
     view: (vnode) => {
+        
+        
         videoID = urlsplitter(vnode.attrs.videoTitle);
         videoURL = "https://www.youtube.com/watch?v="+videoID;
         user = vnode.attrs.queueUser;
         if(videoID.length!=11){
             return; // if ID is in any way, invalid, we do not do anything.
-        }else{
-            var Queue = require("./../../../models/Queue");
-            Queue.enqueue(videoURL, user);
         }
         
         return m("div", {class: "queued-video"},[

@@ -12,6 +12,7 @@ var videoArray = [];
 
 var VideoQueue = {
     enqueue:(title, user)=>{
+        console.log("VideoQueue.enqueue(title, user) executed");
         var newqueue = m(QueuedVideo, {videoTitle: title, queueUser: user});
         newqueue.title = title;
         newqueue.user = user;

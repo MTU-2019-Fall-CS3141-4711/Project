@@ -15,6 +15,7 @@ var Queue = {
         });
     },
     enqueue: (URL, User) =>{
+        console.log("Queue.enqueue(URL, User) is executed");
         var queueURL = URL;
         var queueUser = User;
         let UserURLTuple = {
@@ -26,8 +27,9 @@ var Queue = {
             queue: Firebase.firestore.FieldValue.arrayUnion(UserURLTuple)
         });
         var VideoQueue = require("./../views/components/MainVideoContent/VideoQueue");
+        
         VideoQueue.enqueue(UserURLTuple.queueURL, UserURLTuple.queueUser);
-        console.log("Queued URL: "+URL + "\nCurrent Queue: "+arrayQueue.toLocaleString()+"\nQueued By: "+User);
+        //console.log("Queued URL: "+URL + "\nCurrent Queue: " + arrayQueue.length +" "+arrayQueue.toLocaleString()+"\nQueued By: "+User);
         return arrayQueue;
     },
 

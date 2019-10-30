@@ -20,6 +20,7 @@ let Textbox = {
     ,
     /* Create input of type text */
     view: (vnode) =>{
+        console.log("Textbox.view(vnode) executed");
         return m("input[type=text]", {
             oninput: function (e) {
                 
@@ -28,15 +29,19 @@ let Textbox = {
                 //setEvent(e);
             },
             onkeypress: function (e) {
+                //console.log("Textbox.view(vnode).onkeypress(e) executed");
                 var Queue = require("./../../../models/Queue");
-                console.log(e+" "+ e.target+" "+e.target.value);
+                //console.log(e+" "+ e.target+" "+e.target.value+" "+e.keyCode);
                 QueueButton.setTarg(e.target);
                 if(e.keyCode==13){
                     //console.log("Enter was hit");
-                    if(e.target.value.toLowerCase()=="/clear"){
-                        Queue.clearQueue();
-                        VideoQueue.clearQueue();
+                    if(e.target.value.toLowerCase().startsWith("/")){ // possibly add other '/' commands
+                        if(e.target.value.toLowerCase()=="/clear"){
+                            Queue.clearQueue();
+                            VideoQueue.clearQueue();
+                        }
                     }else{
+                       //console.log("Queue.enqueue called from textbox");
                         Queue.enqueue(e.target.value, "Username");
                     }
                     
