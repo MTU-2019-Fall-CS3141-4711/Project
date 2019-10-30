@@ -6,7 +6,14 @@ var User = {
     construct: () =>{
         User.User = Firebase.auth().currentUser;
     },
+<<<<<<< Updated upstream:js/models/User.js
     isUserSignedIn: () => {
+=======
+    isInitialized: () => {
+        if(Firebase.auth().currentUser != null){
+            Session.Session = Firebase.auth().currentUser;
+        }
+>>>>>>> Stashed changes:js/models/Session.js
         return (Firebase.auth().currentUser != null);
     },
     signIn: () => {

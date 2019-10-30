@@ -32,6 +32,10 @@
     "webpack-cli": "^3.3.9"
   },
   "scripts": {
+<<<<<<< Updated upstream
+=======
+    "launch": "firebase serve --only hosting",
+>>>>>>> Stashed changes
     "dev-web-start": "webpack js/router.js --output bin/app.js -d --watch --devtool source-map",
     "dev-less-start": "less-watch-compiler style/ . style.less",
     "build": "npm run-script build-web; npm run-script build-less",

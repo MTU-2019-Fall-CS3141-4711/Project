@@ -17,6 +17,7 @@ var RoomState = {
         });
     },
     createNew: (vnode) => {
+<<<<<<< Updated upstream
         Firebase.firestore().collection("room").add({
             queue: [],
             is_playing: false,
@@ -26,6 +27,23 @@ var RoomState = {
             docRefence.collection("users").add({
                 display_name: "Foo Bar"
             }).then( () => {} ).catch( (err)=> { console.log(err); });
+=======
+        return new Promise( (resolve, reject) =>{
+            // Create the room with default attributes
+            Firebase.firestore().collection("room").add({
+                latest_message: "",
+                queue: [],
+                is_playing: false,
+                playback_time: 0,
+                playback_last_update: 0
+            }).then( (docRefence)=> {
+                // Add a users subcollection with one user in it
+                console.log("This code is running.");
+                docRefence.collection("users").add({
+                    Chat_Map: {id: docRefence, display_name: "Foo Bar", 
+                    isHost: true}
+                }).then( () => {} ).catch( (err)=> { console.log(err); });
+>>>>>>> Stashed changes
 
             docRefence.collection("chat_messages").doc("messages").set({
                 messages: []
