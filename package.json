@@ -15,13 +15,12 @@
   "homepage": "https://github.com/MTU-2019-Fall-CS3141-4711/Project#readme",
   "dependencies": {
     "firebase": "^7.2.1",
-    "firebase-tools": "^7.6.1",
     "jsdom": "^15.2.0",
     "youtube-player": "^5.5.2"
   },
   "devDependencies": {
+    "@firebase/testing": "^0.14.2",
     "copyfiles": "^2.1.1",
-    "replace-in-files-cli": "^0.3.0",
     "less": "^3.10.3",
     "less-watch-compiler": "^1.14.1",
     "mithril": "^2.0.4",
@@ -32,7 +31,7 @@
     "webpack-cli": "^3.3.9"
   },
   "scripts": {
-    "launch": "./node_modules/firebase-tools/lib/bin/firebase.js serve --only hosting",
+    "launch": "firebase serve --only hosting",
     "dev-web-start": "webpack js/router.js --output bin/app.js -d --watch --devtool source-map",
     "dev-less-start": "less-watch-compiler style/ . style.less",
     "build": "npm run-script build-web; npm run-script build-less",
