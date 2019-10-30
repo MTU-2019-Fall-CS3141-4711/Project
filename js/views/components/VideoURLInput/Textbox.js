@@ -28,16 +28,19 @@ let Textbox = {
                 //setEvent(e);
             },
             onkeypress: function (e) {
+                var Queue = require("./../../../models/Queue");
+                console.log(e+" "+ e.target+" "+e.target.value);
+                QueueButton.setTarg(e.target);
                 if(e.keyCode==13){
                     //console.log("Enter was hit");
                     if(e.target.value.toLowerCase()=="/clear"){
-                        var Queue = require("./../../../models/Queue");
                         Queue.clearQueue();
                         VideoQueue.clearQueue();
+                    }else{
+                        Queue.enqueue(e.target.value, "Username");
                     }
-                    console.log(e+" "+ e.target+" "+e.target.value);
-                    QueueButton.setTarg(e.target);
-                    VideoQueue.enqueue(e.target.value, "Username"); // TODO: pull username from firebase
+                    
+                    //VideoQueue.enqueue(e.target.value, "Username"); // TODO: pull username from firebase
                     Textbox.clear(e.target);
                 }
             },

@@ -21,12 +21,14 @@ let QueueButton = {
             /* Button Text */
             value:"Queue!",
             onclick: (e) => {
-                VideoQueue.enqueue(title, "Username"); // TODO: grab current user
+                var Queue = require("./../../../models/Queue");
                 var TextBox = require("./Textbox");
                 if(title.toLowerCase()=="/clear"){
-                    var Queue = require("./../../../models/Queue");
                     Queue.clearQueue();
                     VideoQueue.clearQueue();
+                }else{
+                    //VideoQueue.enqueue(title, "Username"); // TODO: grab current user
+                    Queue.enqueue(title, "Username");
                 }
                 TextBox.clear(targ);
             },

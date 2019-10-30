@@ -10,7 +10,7 @@ var Queue = {
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
         .onSnapshot((doc) => {
             arrayQueue.push(doc.data().queue);
-            console.log("construct called\nArrayQueue: "+arrayQueue.toLocaleString);
+            console.log("construct called\nArrayQueue: "+arrayQueue.toLocaleString());
             m.redraw();
         });
     },
@@ -22,7 +22,12 @@ var Queue = {
             queueUser: queueUser
         }
         arrayQueue.push(UserURLTuple);
-        console.log("Queued URL: "+URL + "\nCurrent Queue: "+arrayQueue.toString()+"\nQueued By: "+User);
+        Firebase.firestore().collection("room").doc(RoomState.Room_ID).update({
+            queue: Firebase.firestore.FieldValue.arrayUnion(UserURLTuple)
+        });
+        var VideoQueue = require("./../views/components/MainVideoContent/VideoQueue");
+        VideoQueue.enqueue(UserURLTuple.queueURL, UserURLTuple.queueUser);
+        console.log("Queued URL: "+URL + "\nCurrent Queue: "+arrayQueue.toLocaleString()+"\nQueued By: "+User);
         return arrayQueue;
     },
 
@@ -36,6 +41,9 @@ var Queue = {
     },
     clearQueue: ()=>{
         arrayQueue = [];
+        Firebase.firestore().collection("room").doc(RoomState.Room_ID).update({
+            queue: []
+        });
         return arrayQueue;
     }
 }

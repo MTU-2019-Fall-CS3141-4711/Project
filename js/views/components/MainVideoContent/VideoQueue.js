@@ -1,16 +1,14 @@
 var m = require("mithril");
 
+let Firebase = require("firebase/app");
+let RoomState = require("./../../../models/RoomState");
+// Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+
 var QueuedVideo = require("./QueuedVideo");
 /*
     Queue of videos to be played with queue moderation controls inline
 */
 var videoArray = [];
-// function enqueue(title, user){
-//     var newqueue = m(QueuedVideo);
-//     newqueue.title = title;
-//     newqueue.user = user;
-//     return videoArray.push(newqueue);
-// }
 
 var VideoQueue = {
     enqueue:(title, user)=>{
