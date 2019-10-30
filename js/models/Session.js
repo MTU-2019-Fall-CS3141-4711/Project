@@ -6,6 +6,7 @@ var Session = {
     construct: () =>{
         Session.Session = Firebase.auth().currentUser;
     },
+
     isInitialized: () => {
         return (Firebase.auth().currentUser != null);
     },
@@ -17,7 +18,8 @@ var Session = {
             Firebase.auth().signInAnonymously()
             .then( (UserCredential) => {
                 
-                Session.Session = UserCredential.User;
+                Session.Session = UserCredential.user;
+                console.log(UserCredential.User);
                 resolve();
 
             }).catch( (error) =>{
