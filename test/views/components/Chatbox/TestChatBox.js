@@ -1,4 +1,4 @@
-/* var mq = require("mithril-query");
+var mq = require("mithril-query");
 
 var ChatBox = require("../../../../js/views/components/ChatBox/ChatBox");
 
@@ -9,4 +9,4 @@ describe("The chat box", function(){
     it("should exist and get more tests later", function(){
         chNode.should.have([".chatbox"]);
     });
-}); */
+});

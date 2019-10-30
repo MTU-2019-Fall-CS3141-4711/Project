@@ -19,8 +19,8 @@
     "youtube-player": "^5.5.2"
   },
   "devDependencies": {
+    "@firebase/testing": "^0.14.2",
     "copyfiles": "^2.1.1",
-    "replace-in-files-cli": "^0.3.0",
     "less": "^3.10.3",
     "less-watch-compiler": "^1.14.1",
     "mithril": "^2.0.4",

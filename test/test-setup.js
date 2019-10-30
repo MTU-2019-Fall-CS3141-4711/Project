@@ -1,7 +1,11 @@
 var jsdom = require("jsdom");
 
-// Create a fake DOM to render & test
-dom = new jsdom.JSDOM("<!DOCTYPE HTML><html><head></head><body><div id='player'></div></body></html>", {
+//Firebase needs to load all of it's stuff before we point to JSDOM or else it breaks enviromental checks and fails
+var Firebase = require("firebase/app");
+require("firebase");
+
+ // Create a fake DOM to render & test
+ dom = new jsdom.JSDOM("<!DOCTYPE HTML><html><head></head><body><div id='player'></div></body></html>", {
     pretendToBeVisual:true
 });
 
@@ -12,7 +16,3 @@ global.requestAnimationFrame = dom.window.requestAnimationFrame;
 
 //Make sure Mithril loads properly in fake DOM.
 require("mithril");
-
-after(function(){
-    dom.window.close()
-});
