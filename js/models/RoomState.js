@@ -35,12 +35,6 @@ var RoomState = {
                 playback_time: 0,
                 playback_last_update: 0
             }).then( (docRefence)=> {
-                // Add a users subcollection with one user in it
-                console.log("This code is running.");
-                docRefence.collection("users").doc("Users").set({
-                    users: []
-                }).then( () => {} ).catch( (err)=> { console.log(err); });
-
                 // Get the generated ID and store it
                 RoomState.Room_ID = docRefence.id;
                 m.route.set("/" + RoomState.Room_ID + "/loading");

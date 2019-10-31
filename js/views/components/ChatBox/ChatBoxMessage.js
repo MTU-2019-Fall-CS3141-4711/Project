@@ -3,11 +3,14 @@ var m = require("mithril");
 var ChatMessage = require("./ChatMessage");
 
 var ChatBoxMessage = {
-    messageHistory: [],
     view: () => {
+        var Chat = require("../../../models/Chat");
         return m("div", {class: "chatboxmessage"},
-            ChatBoxMessage.messageHistory.map( (i) => {
-                return m(ChatMessage, {message: i});
+            Chat.messages.map( (i) => {
+                return m(ChatMessage, {
+                    user: Chat.getUsername(i.senderID), 
+                    message: i.text
+                });
             })
         );
     }
