@@ -2,6 +2,7 @@ var m = require("mithril");
 
 var RoomState = require("./../models/RoomState");
 var Chat = require("./../models/Chat");
+var Queue = require("../models/Queue");
 
 var RoomNavigation = require("./components/VideoURLInput/RoomNavigation");
 var Toolbar = require("./components/Toolbar/Toolbar");
@@ -27,6 +28,7 @@ var Room = {
     oninit: (vnode) => {
         RoomState.constructExisting(vnode.attrs.roomid);
         Chat.construct();
+        Queue.construct();
         console.log("Snapshot Listeners Initialized!");
     },
     oncreate: () => {

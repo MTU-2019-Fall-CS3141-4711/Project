@@ -21,9 +21,19 @@ let QueueButton = {
             /* Button Text */
             value:"Queue!",
             onclick: (e) => {
-                //console.log("queueueueueueue was clicked");
-                VideoQueue.enqueue(title, "Queued by: Username");
-                var TextBox = require("./Textbox"); // THANKS WILL
+                console.log("QueueButton(vnode).onclick(e) executed");
+                var Queue = require("./../../../models/Queue");
+                var TextBox = require("./Textbox");
+                if(title.toLowerCase().startsWith("/")){ // possibly add other '/' commands
+                    if(title.toLowerCase()=="/clear"){
+                        Queue.clearQueue();
+                        VideoQueue.clearQueue();
+                    }
+                }else{
+                    //VideoQueue.enqueue(title, "Username"); // TODO: grab current user
+                    console.log("Queue.enqueue called from QueueButton");
+                    Queue.enqueue(title, "Username");
+                }
                 TextBox.clear(targ);
             },
             /*
