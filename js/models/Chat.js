@@ -8,13 +8,16 @@ var Session = require("./Session");
 var ChatBoxMessage = require("../views/components/ChatBox/ChatBoxMessage");
 
 var Chat = {
-    //messages: [],
     construct: () => {
         // onSnapshot listener for chat message send
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
         .onSnapshot((doc) => {
-            ChatBoxMessage.messageHistory.push(doc.data().latest_message);
-            m.redraw();
+            let message = doc.data().latest_message;
+            // Prevent duplicates
+            if(message != ChatBoxMessage.messageHistory[ChatBoxMessage.messageHistory.length -1]){
+                ChatBoxMessage.messageHistory.push(message);
+                m.redraw();
+            }
         });
 
         let UserMap = {
