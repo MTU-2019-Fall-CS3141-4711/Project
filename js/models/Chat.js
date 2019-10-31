@@ -12,20 +12,21 @@ var Chat = {
     getUsername: (userID) => {
         return (typeof Chat.users[userID] == "undefined")? "Anonymous" : Chat.users[userID]; 
     },
-    construct: () => {
-        /**
-         * Register user with the "chat server"
-         */
-        Firebase.firestore()
-            .collection("room").doc(RoomState.Room_ID)
-            .collection("users").doc(Session.getUid())
-            .set({ name: "Steve" })
-            .then( (snapshot) => {
-                // User was created succesfully
-            }).catch( (err) => {
-                console.log("Error registering user with server");
-                console.log(err);
-            });
+    construct: async () => {
+            let username = await Chat.randomName();
+            /**
+             * Register user with the "chat server"
+             */
+            Firebase.firestore()
+                .collection("room").doc(RoomState.Room_ID)
+                .collection("users").doc(Session.getUid())
+                .set({ name: username })
+                .then( (snapshot) => {
+                    // User was created succesfully
+                }).catch( (err) => {
+                    console.log("Error registering user with server");
+                    console.log(err);
+                });
 
         /**
          * Listen for new chat messages being sent
@@ -85,6 +86,17 @@ var Chat = {
                 console.log(err);
             });
     
+    },
+    randomName: async () => {
+        let username = "Steve";
+        await m.request({
+            method:"GET",
+            url: "https://uinames.com/api/?region=United%20States"
+        }).then( (result)=> {
+            username = result.name;
+        });
+
+        return username;
     }
 
 }
