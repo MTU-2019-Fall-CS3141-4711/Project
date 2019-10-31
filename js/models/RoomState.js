@@ -12,7 +12,6 @@ var RoomState = {
             // Get the information about the room
             Firebase.firestore().collection("room").doc(RoomState.Room_ID).get()
             .then( (snapshot) =>{
-                snapshot.data().queue;
                 snapshot.data().is_playing;
                 snapshot.data().playback_time;
                 snapshot.data().playback_last_update;
@@ -30,7 +29,6 @@ var RoomState = {
             // Create the room with default attributes
             Firebase.firestore().collection("room").add({
                 latest_message: "",
-                queue: [],
                 is_playing: false,
                 playback_time: 0,
                 playback_last_update: 0

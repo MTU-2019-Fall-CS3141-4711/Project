@@ -1,59 +1,70 @@
 let m = require("mithril");
 let Firebase = require("firebase/app");
 let RoomState = require("./RoomState");
+var Session = require("../models/Session");
 var VideoQueue = require("./../views/components/MainVideoContent/VideoQueue");
-        
-
-var arrayQueue = [];
 
 // Firebase.firestore().collection("room").doc(RoomState.Room_ID)
 
 var Queue = {
+    q: [],
     construct: () => {
+        /**
+         * Listen for changes to the video queue
+         */
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
-        .onSnapshot((doc) => {
-            var fbQueue = doc.data().queue;
-            arrayQueue.push(fbQueue);
-            VideoQueue.clearQueue();
-            fbQueue.forEach(function(element){
-                Queue.enqueue(element.queueURL, element.queueUser);
+            .collection("queue")
+            .limit(15)
+            .onSnapshot( (snapshot) => {
+                /**
+                 * This will return a list of all the videos in the queue
+                 * so it is easiest to just clear the local value and sync with
+                 * Firestore / Firestore cache
+                 */
+                Queue.q = [];
+                snapshot.docs.forEach( (docRef) => {
+                    Queue.q.push({
+                        url: docRef.data().url,
+                        user: docRef.data().user
+                    })
+                });
+                m.redraw();
+                console.log(snapshot);
             });
-            console.log("construct called\nArrayQueue: "+arrayQueue.toLocaleString());
-            m.redraw();
-        });
     },
-    enqueue: (URL, User) =>{
-        console.log("Queue.enqueue(URL, User) is executed");
-        var queueURL = URL;
-        var queueUser = User;
-        let UserURLTuple = {
-            queueURL: queueURL,
-            queueUser: queueUser
-        }
-        arrayQueue.push(UserURLTuple);
-        Firebase.firestore().collection("room").doc(RoomState.Room_ID).update({
-            queue: Firebase.firestore.FieldValue.arrayUnion(UserURLTuple)
-        });
-        
-        VideoQueue.enqueue(UserURLTuple.queueURL, UserURLTuple.queueUser);
-        //console.log("Queued URL: "+URL + "\nCurrent Queue: " + arrayQueue.length +" "+arrayQueue.toLocaleString()+"\nQueued By: "+User);
-        return arrayQueue;
+    enqueue: (URL) =>{
+        /**
+         * Create a document (queued item) in the queue collection
+         */
+        Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+            .collection("queue").add({
+                url: URL,
+                user: Session.getUid()
+            });
     },
 
     // not needed yet, but for will when we grab a new video from the queue
     dequeue: ()=>{
         if(arrayQueue.length>0){
-        return arrayQueue.pop();
+            return arrayQueue.pop();
         }else{
             console.error("Queue is empty and we cannot dequeue - Queue.js");
         }
     },
     clearQueue: ()=>{
-        arrayQueue = [];
-        Firebase.firestore().collection("room").doc(RoomState.Room_ID).update({
-            queue: []
-        });
-        return arrayQueue;
+        /**
+         * Get the documents (videos) in the queue and delete them one by one
+         */
+        Firebase.firestore().collection("room").doc(RoomState.RoomId)
+            .collection("queue")
+            .get()
+            .then( (snapshot) => {
+                snapshot.forEach( (docSnapshot) => {
+                    docSnapshot.ref.delete();
+                }); 
+            }).catch( (err) => {
+
+            })
     }
 }
 

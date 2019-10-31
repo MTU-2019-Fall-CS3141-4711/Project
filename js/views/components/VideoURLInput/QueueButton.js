@@ -21,7 +21,6 @@ let QueueButton = {
             /* Button Text */
             value:"Queue!",
             onclick: (e) => {
-                console.log("QueueButton(vnode).onclick(e) executed");
                 var Queue = require("./../../../models/Queue");
                 var TextBox = require("./Textbox");
                 if(title.toLowerCase().startsWith("/")){ // possibly add other '/' commands
@@ -30,9 +29,7 @@ let QueueButton = {
                         VideoQueue.clearQueue();
                     }
                 }else{
-                    //VideoQueue.enqueue(title, "Username"); // TODO: grab current user
-                    console.log("Queue.enqueue called from QueueButton");
-                    Queue.enqueue(title, "Username");
+                    Queue.enqueue(title);
                 }
                 TextBox.clear(targ);
             },
