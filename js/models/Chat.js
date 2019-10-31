@@ -34,6 +34,11 @@ var Chat = {
             .collection("chats")
             .orderBy("timestamp").limit(50)
             .onSnapshot((snapshot) => {
+                /**
+                 * This will return a list of the last 50 messages sent in chat
+                 * so it is easiest to just clear the local value and sync with
+                 * Firestore/ Firestore cache
+                 */
                 Chat.messages = [];
 
                 snapshot.docs.forEach( (docRef) => {
@@ -51,7 +56,11 @@ var Chat = {
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
             .collection("users")
             .onSnapshot( (snapshot) => {
-                // Clear the list to rebuild from database
+                /**
+                 * This will return a list of all the users registered in the room
+                 * so it is easiest to just clear the local value and sync with
+                 * Firestore/ Firestore cache
+                 */
                 Chat.users = {};
 
                 // Build the list
