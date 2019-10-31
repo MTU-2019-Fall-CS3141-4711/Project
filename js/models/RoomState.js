@@ -37,9 +37,8 @@ var RoomState = {
             }).then( (docRefence)=> {
                 // Add a users subcollection with one user in it
                 console.log("This code is running.");
-                docRefence.collection("users").add({
-                    Chat_Map: {id: docRefence, display_name: "Foo Bar", 
-                    isHost: true}
+                docRefence.collection("users").doc("Users").set({
+                    users: []
                 }).then( () => {} ).catch( (err)=> { console.log(err); });
 
                 // Get the generated ID and store it

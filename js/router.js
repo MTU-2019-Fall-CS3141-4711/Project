@@ -43,11 +43,13 @@ m.route(document.body, "/",{
                         return;
     
                     }).catch( (err) => {
+                        console.log(err);
                         // TODO: Return an error page
                     });
 
-                }).catch(() => {
+                }).catch((err) => {
                     // TODO: Return an error page
+                    console.log(err);
                     console.log("Error creating session");
                 });
 
@@ -97,7 +99,7 @@ function sessionSetup(roomid){
         }).catch((err) => {
             //Eventually this should print something to an error display
             console.log("Error creating session");
-            reject();
+            reject(err);
         });
 
     });
