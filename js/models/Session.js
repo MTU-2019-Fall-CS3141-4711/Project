@@ -1,6 +1,8 @@
 var Firebase = require("firebase/app");
 require("firebase/auth");
 
+var RoomState = require("./RoomState");
+
 var Session = {
     Session: null,
     construct: () =>{
@@ -17,9 +19,7 @@ var Session = {
         return new Promise(function(resolve, reject){
             Firebase.auth().signInAnonymously()
             .then( (UserCredential) => {
-                
                 Session.Session = UserCredential.user;
-                console.log(UserCredential.User);
                 resolve();
 
             }).catch( (error) =>{

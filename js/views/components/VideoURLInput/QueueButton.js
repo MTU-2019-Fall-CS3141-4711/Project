@@ -21,9 +21,16 @@ let QueueButton = {
             /* Button Text */
             value:"Queue!",
             onclick: (e) => {
-                //console.log("queueueueueueue was clicked");
-                VideoQueue.enqueue(title, "Queued by: Username");
-                var TextBox = require("./Textbox"); // THANKS WILL
+                var Queue = require("./../../../models/Queue");
+                var TextBox = require("./Textbox");
+                if(title.toLowerCase().startsWith("/")){ // possibly add other '/' commands
+                    if(title.toLowerCase()=="/clear"){
+                        Queue.clearQueue();
+                        VideoQueue.clearQueue();
+                    }
+                }else{
+                    Queue.enqueue(title);
+                }
                 TextBox.clear(targ);
             },
             /*
