@@ -1,7 +1,7 @@
 {
   "name": "youtwobe",
   "version": "1.0.0",
-  "description": "Sychronized Video Viewing",
+  "description": "Sychronized Video Viewing.",
   "main": "index.js",
   "repository": {
     "type": "git",
