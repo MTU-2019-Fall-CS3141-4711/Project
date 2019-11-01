@@ -1,26 +1,24 @@
 var m = require("mithril");
 
+let Firebase = require("firebase/app");
+let RoomState = require("./../../../models/RoomState");
+var Chat = require("../../../models/Chat");
+var Queue = require("../../../models/Queue");
+// Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+
 var QueuedVideo = require("./QueuedVideo");
 /*
     Queue of videos to be played with queue moderation controls inline
 */
-var videoArray = [];
-// function enqueue(title, user){
-//     var newqueue = m(QueuedVideo);
-//     newqueue.title = title;
-//     newqueue.user = user;
-//     return videoArray.push(newqueue);
-// }
 
 var VideoQueue = {
-    enqueue:(title, user)=>{
-        var newqueue = m(QueuedVideo, {videoTitle: title, queueUser: user});
-        newqueue.title = title;
-        newqueue.user = user;
-        return videoArray.push(newqueue);
-    },
     view: () => {
-        return m("div", {class:"video-queue"}, videoArray);
+        return m("div", {class:"video-queue"}, Queue.q.map( (i) => {
+            return m(QueuedVideo, {
+                videoTitle: i.url,
+                queueUser: Chat.getUsername(i.user)
+            })
+        }));
     }
 }
 

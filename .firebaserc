@@ -1,5 +1,6 @@
 {
   "projects": {
-    "CS3141_Project": "youtwobe-video-viewer"
+    "CS3141_Project": "youtwobe-video-viewer",
+    "youtwobe": "youtwobe-video-viewer"
   }
 }
