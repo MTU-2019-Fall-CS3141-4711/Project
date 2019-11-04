@@ -1,5 +1,6 @@
 node_modules
-bin
+app.js
+app.js.map
 .nyc_output
 style.css
 firebase-debug.log
