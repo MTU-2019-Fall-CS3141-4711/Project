@@ -4,11 +4,12 @@ var ChatMessage = require("./ChatMessage");
 
 var ChatBoxMessage = {
     view: () => {
+        var RoomState = require("../../../models/RoomState");
         var Chat = require("../../../models/Chat");
         return m("div", {class: "chatboxmessage"},
             Chat.messages.map( (i) => {
                 return m(ChatMessage, {
-                    user: Chat.getUsername(i.senderID), 
+                    user: RoomState.getUsername(i.senderID), 
                     message: i.text
                 });
             })

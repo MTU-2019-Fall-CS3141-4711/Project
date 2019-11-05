@@ -1,6 +1,7 @@
 var m = require("mithril");
 
 var RoomState = require("./../models/RoomState");
+var User = require("./../models/User");
 var Chat = require("./../models/Chat");
 var Queue = require("../models/Queue");
 
@@ -27,9 +28,11 @@ var YTVideIframe = require("../models/YTVideoIframe");
 var Room = {
     oninit: (vnode) => {
         RoomState.constructExisting(vnode.attrs.roomid);
-        Chat.construct();
-        Queue.construct();
-        console.log("Snapshot Listeners Initialized!");
+        User.construct().then( () => {
+            Chat.construct();
+            Queue.construct();
+            console.log("Snapshot Listeners Initialized!");
+        })
     },
     oncreate: () => {
         YTVideIframe.enableDisplay();
