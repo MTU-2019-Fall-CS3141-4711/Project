@@ -1,6 +1,7 @@
 {
   "projects": {
     "CS3141_Project": "youtwobe-video-viewer",
-    "youtwobe": "youtwobe-video-viewer"
+    "youtwobe": "youtwobe-video-viewer",
+    "default": "youtwobe-video-viewer"
   }
 }

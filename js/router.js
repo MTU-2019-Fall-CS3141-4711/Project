@@ -1,12 +1,13 @@
 var m = require("mithril");
 
 var Firebase = require("firebase/app");
-
+require("firebase/firestore");
 // Initialize Cloud Firestore through Firebase
 Firebase.initializeApp({
     apiKey: 'AIzaSyDs-rZyScasOYHskDQm-y_c0BskHuoaKXA',
     authDomain: ' youtwobe-video-viewer.firebaseapp.com ',
-    projectId: 'youtwobe-video-viewer'
+    projectId: 'youtwobe-video-viewer',
+    databaseURL: "https://youtwobe-video-viewer.firebaseio.com/"
 });
 
 var RoomState = require("./models/RoomState");
