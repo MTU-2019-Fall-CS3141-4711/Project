@@ -36,7 +36,7 @@
     "build": "npm run-script build-web; npm run-script build-less",
     "build-web": "webpack js/router.js --output bin/app.js -p --devtool source-map",
     "build-less": "lessc style/style.less style.css",
-    "build-index": "copyfiles index.html bin/; copyfiles app.js bin/; copyfiles app.js.map bin/",
+    "build-index": "copyfiles index.html bin/; copyfiles app.js bin/; copyfiles app.js.map bin/; copyfiles loading.gif bin/",
     "deploy": "npm run build; npm run-script build-index; copyfiles style.css bin/",
     "test": "mocha --recursive --file test/test-setup.js",
     "test-coverage": "nyc mocha --recursive --file test/test-setup.js"
