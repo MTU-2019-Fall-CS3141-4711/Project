@@ -29,7 +29,7 @@ exports.onUserLeaveRoom = functions.database.ref("{room_id}/{user_id}").onDelete
             // Delete all the users (there shouldn't be any, but we're doing it anyway)
             await roomRef.collection("users").get()
                 .then( (snapshot) => {
-                    snapshot.forEach( (docRef) => {
+                    snapshot.forEach( (queryRef) => {
                         queryRef.ref.delete();
                     })
                 }).catch( (err) => console.log(err));
