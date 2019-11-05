@@ -8,7 +8,11 @@ var admin = require("firebase-admin");
 exports.onUserLeaveRoom = functions.database.ref("{room_id}/{user_id}").onDelete(
     async(snapshot, context) => {
         // Check if there are any entires in the user list
-        let hasUsers = await snapshot.hasChildren();
+        let hasUsers = true;
+        await admin.database().ref(context.params.room_id).once("value")
+            .then( (snapshot) => {
+                hasUsers = snapshot.hasChildren();
+            });
 
         // If there are not any users, delete the room in both databases
         if(!hasUsers){
@@ -26,15 +30,23 @@ exports.onUserLeaveRoom = functions.database.ref("{room_id}/{user_id}").onDelete
             await roomRef.collection("users").get()
                 .then( (snapshot) => {
                     snapshot.forEach( (docRef) => {
-                        docRef.delete();
+                        queryRef.ref.delete();
                     })
                 }).catch( (err) => console.log(err));
+
+            // Delete all the chat messages
+            await roomRef.collection("chats").get()
+            .then( (snapshot) => {
+                snapshot.forEach( (queryRef) => {
+                    queryRef.ref.delete();
+                })
+            }).catch( (err) => console.log(err));
 
             // Delete all the queued videos
             await roomRef.collection("queue").get()
                 .then( (snapshot) => {
-                    snapshot.forEach( (docRef) => {
-                        docRef.delete();
+                    snapshot.forEach( (queryRef) => {
+                        queryRef.ref.delete();
                     })
                 }).catch( (err) => console.log(err));
 
