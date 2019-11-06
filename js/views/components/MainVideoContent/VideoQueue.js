@@ -1,10 +1,10 @@
 var m = require("mithril");
 
 // let Firebase = require("firebase/app");
-// let RoomState = require("./../../../models/RoomState");
+ let RoomState = require("./../../../models/RoomState");
 // var Chat = require("../../../models/Chat");
 var Queue = require("../../../models/Queue");
-var User = require("../../../models/User");
+//var User = require("../../../models/User");
 // Firebase.firestore().collection("room").doc(RoomState.Room_ID)
 
 var QueuedVideo = require("./QueuedVideo");
@@ -15,9 +15,10 @@ var QueuedVideo = require("./QueuedVideo");
 var VideoQueue = {
     view: () => {
         return m("div", {class:"video-queue"}, Queue.q.map( (i) => {
+            console.log(i.user);
             return m(QueuedVideo, {
                 videoTitle: i.url,
-                queueUser: User.username
+                queueUser: RoomState.getUsername(i.user)
             })
         }));
     }
