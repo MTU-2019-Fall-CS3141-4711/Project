@@ -24,6 +24,7 @@ var Chat = {
                 Chat.messages = [];
 
                 snapshot.docs.forEach( (docRef) => {
+                    
                     Chat.messages.push({
                         senderID: docRef.data().senderID,
                         text: docRef.data().text

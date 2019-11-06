@@ -8,7 +8,10 @@ var ChatBoxText = {
         ChatBoxText.textarea = m("textarea", {class:"chatboxtext",
             onkeyup: (e) => {
                 if(e.keyCode == 13){
-                    Chat.sendMessage( ChatBoxText.getTextAreaMessage() );
+                    var msg = ChatBoxText.getTextAreaMessage();
+                    if(msg.trim().length!=0){
+                        Chat.sendMessage( msg );
+                    }
                     ChatBoxText.clearTextArea();
                 }
             }
