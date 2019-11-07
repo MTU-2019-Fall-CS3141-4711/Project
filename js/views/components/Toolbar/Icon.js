@@ -1,5 +1,6 @@
 var m = require("mithril");
 
+var ToolbarState = require("./../../../models/ToolbarState");
 /*
     Invidual tool icon
 */
@@ -7,7 +8,7 @@ var Icon = {
     view: (vnode) => {
         return m("i", {
                 class:"icon active-icon " + vnode.attrs.icon,
-                onclick: () => { console.log(vnode.attrs.icon + " was clicked"); }
+                onclick: () => { ToolbarState.setTool(vnode.attrs.tool); }
             },
         );
     }
