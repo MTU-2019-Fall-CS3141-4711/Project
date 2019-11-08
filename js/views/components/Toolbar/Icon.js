@@ -6,7 +6,7 @@ var m = require("mithril");
 var Icon = {
     view: (vnode) => {
         return m("i", {
-                class:"icon active-icon " + vnode.attrs.icon,
+                class:"icon active-icon " + vnode.attrs.icon, style: vnode.attrs.align,
                 onclick: () => { console.log(vnode.attrs.icon + " was clicked"); }
             },
         );
