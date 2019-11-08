@@ -11,9 +11,7 @@ var User = {
 
     isBanned: false,
     isModerator: false,
-    isBanned: () => { return User.isBanned; },
-    isModerator: () => { return User.isModerator; },
-
+    isHost: false,
     /**
      * Pulls as necesary permission information and registers user with the server
      */
@@ -60,12 +58,20 @@ var User = {
             m.redraw();
         });
 
-         /**
-         * REFERENCE: https://firebase.google.com/docs/firestore/solutions/presence
-         * Register listener so application knows when it's lost connection to chat.
-         * .info/connected is a special Database path and will fire everytime the user connects
-         * or disconnects. 
-         */
+        // Check if we're hosting - await because we need this to initialize snapshot listeners for video playback
+        let hostRef = Firebase.firestore().collection("room").doc(RoomState.Room_ID);
+        await hostRef.get().then( (snapshot) => {
+            if(snapshot.data().host == Session.getUid()){
+                User.isHost = true;
+            }
+        });
+
+        /**
+        * REFERENCE: https://firebase.google.com/docs/firestore/solutions/presence
+        * Register listener so application knows when it's lost connection to chat.
+        * .info/connected is a special Database path and will fire everytime the user connects
+        * or disconnects. 
+        */
         Firebase.database().ref(".info/connected").on("value", (snapshot) => {
             /**
              * When connection state changes to false (disocnnect) remove ourselfs from the 

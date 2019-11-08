@@ -5,6 +5,7 @@ var User = require("./../models/User");
 var Chat = require("./../models/Chat");
 var Queue = require("../models/Queue");
 var Canvas = require("./../models/Canvas");
+var YTVideoFrame = require("./../models/YTVideoIframe");
 
 var RoomNavigation = require("./components/VideoURLInput/RoomNavigation");
 var Toolbar = require("./components/Toolbar/Toolbar");
@@ -31,6 +32,7 @@ var Room = {
             Chat.construct();
             Queue.construct();
             Canvas.construct();
+            YTVideoFrame.construct();
             console.log("Snapshot Listeners Initialized!");
         });
     },

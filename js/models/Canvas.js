@@ -1,4 +1,5 @@
 var ToolbarState = require("./ToolbarState");
+var User = require("./User");
 
 var YTVideoFrame = require("./YTVideoIframe");
 
@@ -12,8 +13,8 @@ var Canvas = {
     },
 
     click: (e) => {
-        if(ToolbarState.getTool() == ToolbarState.POINTER){
-            YTVideoFrame.togglePlayback();
+        if(ToolbarState.getTool() == ToolbarState.POINTER && User.isHost){
+            YTVideoFrame.togglePlaybackLocal();
         }
     },
 

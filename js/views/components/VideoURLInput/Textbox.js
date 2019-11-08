@@ -7,7 +7,6 @@ var ev = null;
 /* Textbox at top of page for video URL */
 let Textbox = {
     clear: (eventTarget) =>{
-        console.log(eventTarget.value);
         eventTarget.value="";
         m.redraw();
     },
@@ -20,7 +19,6 @@ let Textbox = {
     ,
     /* Create input of type text */
     view: (vnode) =>{
-        console.log("Textbox.view(vnode) executed");
         return m("input[type=text]", {
             oninput: function (e) {
                 
