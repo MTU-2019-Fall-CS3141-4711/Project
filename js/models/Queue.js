@@ -29,7 +29,7 @@ var Queue = {
                     })
                 });
                 m.redraw();
-                console.log(snapshot);
+                //console.log(snapshot);
             });
     },
     enqueue: (URL) =>{

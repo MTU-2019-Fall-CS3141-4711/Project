@@ -1,14 +1,11 @@
 var Firebase = require("firebase/app");
 require("firebase/auth");
 
-var RoomState = require("./RoomState");
-
 var Session = {
     Session: null,
     construct: () =>{
         Session.Session = Firebase.auth().currentUser;
     },
-
     isInitialized: () => {
         return (Firebase.auth().currentUser != null);
     },
