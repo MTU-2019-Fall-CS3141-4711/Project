@@ -10,6 +10,7 @@ var ChatList = require("./ChatList");
 var ChatTabButton = require("./ChatTabButton");
 var ChatListTabButton = require("./ChatListTabButton");
 var ChatBoxText = require("./ChatBoxText");
+var ModPopUp = require("./ModPopUp");
 
 var ChatBox = {
     ChatTab: true,
@@ -29,6 +30,7 @@ var ChatBox = {
                 m(ChatTabButton),
                 m(ChatListTabButton),
                 m(ChatList),
+                m(ModPopUp),
                 m(ChatBoxText),
                 m(ChatBoxButton)
             ]);
