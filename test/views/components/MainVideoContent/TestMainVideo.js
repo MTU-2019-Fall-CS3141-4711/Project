@@ -8,8 +8,11 @@ var QueuedVIdeo = require("../../../../js/views/components/MainVideoContent/Queu
 describe("The main video", function(){
     describe("'s invidiual component", function(){
         describe("YTVideoPlayer", function(){
-
-            var ytvpNode = mq(YTVideoPlayer);
+            
+            var ytvpNode = null;
+            before(function(){
+                ytvpNode = mq(YTVideoPlayer);
+            });
 
             it("should render a div for the player", function(){
                 ytvpNode.should.have([".video-player","#player"]);
@@ -18,7 +21,10 @@ describe("The main video", function(){
 
         describe("AnnotatedVideo should wrap YTVideoPlayer", function(){
 
-            var avNode = mq(AnnotatedVideo);
+            var avNode = null;
+            before(function(){
+                avNode = mq(AnnotatedVideo);
+            });
 
             it("should render a video player", function(){
                 avNode.should.have(2, "div");
@@ -33,7 +39,10 @@ describe("The main video", function(){
 
         describe("VideoQueue", function(){
 
-            var qvNode = mq(QueuedVIdeo);
+            var qvNode = null;
+            before(function(){
+                qvNode = mq(QueuedVIdeo);
+            });
             //TODO: write queue tests
 
         });
@@ -41,7 +50,10 @@ describe("The main video", function(){
 
     describe(",with all it's components,", function(){
 
-        var mvcNode  = mq(MainVideoContent);
+        var mvcNode = null;
+        before(function(){
+            mvcNode = mq(MainVideoContent);
+        });
 
         it("should render everything in a wrapper", function(){
             mvcNode.should.have([".main-video-content"]);

@@ -6,22 +6,35 @@ var SearchButton = require("../../../../js/views/components/VideoURLInput/Search
 
 describe("VideoURLInput", function(){
     describe("The Search Button", function(){
-        var vuiSearchButton = mq(SearchButton);
+        var vuiSearchButton = null;
+
+        before(function(){
+            vuiSearchButton = mq(SearchButton);
+        });
+
         it("should say 'search'",function(){
             vuiSearchButton.should.have("input[type=button]");
         });
     });
 
     describe("The Queue Button", function(){
-        var vuiQueueButton = mq(QueueButton);
+        
+        var vuiQueueButton = null;
+        
+        before(function(){
+            vuiQueueButton = mq(QueueButton);
+        });
+
         it("should say 'queue'",function(){
             vuiQueueButton.should.have("input[type=button]");
         });
     });
 
     describe("Standalone", function(){
-
-        var vuiNode = mq(VideoURLInput);
+        var vuiNode = null;
+        before(function () {
+            vuiNode = mq(VideoURLInput);
+        });
 
         it("should have a textbox", function(){
             vuiNode.should.have(1, "input[type=text]");
