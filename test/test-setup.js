@@ -4,8 +4,7 @@
     var jsdom = require("jsdom");
 
     //Firebase needs to load all of it's stuff before we point to JSDOM or else it breaks enviromental checks and fails
-    var Firebase = require("@firebase/testing");
-    require("firebase");
+    var Firebase = require("firebase/app");
     require("firebase/firestore");
     require("firebase/auth");
     require("firebase/database");
@@ -21,30 +20,44 @@
     global.requestAnimationFrame = dom.window.requestAnimationFrame;
 
     // Initialize Cloud Firestore through Firebase
-    Firebase.initializeTestApp({
-        projectId: "youtwobe-video-viewer",
-        auth: {uid: "fakeuser001", display_name:"Joshua", email:"joshua@wopr.mil"}
+    Firebase.initializeApp({
+        apiKey: 'AIzaSyDs-rZyScasOYHskDQm-y_c0BskHuoaKXA',
+        authDomain: ' youtwobe-video-viewer.firebaseapp.com ',
+        projectId: 'youtwobe-video-viewer',
+        databaseURL: "https://youtwobe-video-viewer.firebaseio.com/"
     });
-
     //Make sure Mithril loads properly in fake DOM.
     require("mithril");
-
+    var Session = require("./../js/models/Session");
+    var RoomState = require("./../js/models/RoomState");
+    var User = require("./../js/models/User");
+    var Chat = require("./../js/models/Chat");
+    var Queue = require("./../js/models/Queue");
 /**
  * Setup the tests
  */
 
+    before(async function (){
+        await Session.start();
+        await RoomState.createNew();
+        await User.construct().then( () => {
+            Chat.construct();
+            Queue.construct();
+        });
+
+    });
+
     /*
         Things to call before the tests run
     */
-    before(async () => {
-        // Make sure the database is empty before we start testing
-        await Firebase.clearFirestoreData({ projectId:"youtwobe-video-viewer" });
+    beforeEach(function () {
+
+
     });
 
     /*
         Things to call after the tests run
     */
     after(async () =>{
-        // Clear all the projects once we're done.
-        await Promise.all(Firebase.apps().map(app => app.delete()));
+        
     })
