@@ -4,13 +4,13 @@ var RoomState = require("./../models/RoomState");
 var User = require("./../models/User");
 var Chat = require("./../models/Chat");
 var Queue = require("../models/Queue");
+var Canvas = require("./../models/Canvas");
+var YTVideoFrame = require("./../models/YTVideoIframe");
 
 var RoomNavigation = require("./components/VideoURLInput/RoomNavigation");
 var Toolbar = require("./components/Toolbar/Toolbar");
 var MainVideoContent = require("./components/MainVideoContent/MainVideoContent");
 var ChatBox = require("./components/ChatBox/ChatBox");
-
-var YTVideIframe = require("../models/YTVideoIframe");
 
 /* 
     Video viewing room
@@ -31,13 +31,10 @@ var Room = {
         User.construct().then( () => {
             Chat.construct();
             Queue.construct();
+            Canvas.construct();
+            YTVideoFrame.construct();
             console.log("Snapshot Listeners Initialized!");
-        })
-    },
-    oncreate: () => {
-        YTVideIframe.enableDisplay();
-        YTVideIframe.loadVideo("M7lc1UVf-VE");
-        YTVideIframe.stopPlayer();
+        });
     },
     view: (vnode) => {
         return m("section",{},[

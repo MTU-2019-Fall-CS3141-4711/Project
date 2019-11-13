@@ -1,12 +1,16 @@
 .main-video-content{
     display: inline-block;
     vertical-align: top;
-    margin: 3.5vh 7vw 0px 7vw;
+    position: absolute;
+    margin-right: 7vw;
+    margin-left: 7vw;
 }
 
     .main-video-content .annotation-canvas{
         width:65vw;
         height: 65vh;
+        position: absolute;
+        z-index: 10;
     }
 
     .main-video-content .video-player{
@@ -14,22 +18,23 @@
         height: 65vh;
         
         position: absolute;
-        top: 11.5vh;
+        top: 3.5vh;
+        z-index:-10;
 
         border-radius: 4px;
-        
-        background-color: @theme[background-secondary];
     }
 
     #player{
         width: 65vw;
         height: 65vh;
-        pointer-events: none;
     }
 
     .main-video-content .video-queue{
         width: 65vw;
         height: 15vh;
+
+        position: absolute;
+        top:68vh;
 
         margin-top: 3.5vh;
         margin-bottom: 3.5vh;
