@@ -14,13 +14,18 @@ var QueuedVideo = require("./QueuedVideo");
 
 var VideoQueue = {
     view: () => {
-        return m("div", {class:"video-queue"}, Queue.q.map( (i) => {
-            console.log(i.user);
-            return m(QueuedVideo, {
-                videoTitle: i.url,
-                queueUser: RoomState.getUsername(i.user)
-            })
-        }));
+        return m("div", {class:"video-queue"},
+            (typeof Queue.q == "object")?
+                Queue.q.map( (i) => {
+                    console.log(i.user);
+                    return m(QueuedVideo, {
+                        videoTitle: i.url,
+                        queueUser: RoomState.getUsername(i.user)
+                    })
+                })
+            :
+                ""
+        );
     }
 }
 

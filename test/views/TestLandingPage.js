@@ -3,7 +3,10 @@ var mq = require("mithril-query");
 var LandingPage = require("../../js/views/LandingPage");
 
 describe("The landing page", function(){
-    var lpNode = mq(LandingPage);
+    var lpNode = null;
+    before(function(){
+        lpNode = mq(LandingPage);
+    });
 
     it("should have a wrapper div for positioning", function(){
         lpNode.should.have([".VideoURLWrapper"]);
