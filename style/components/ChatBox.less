@@ -98,10 +98,68 @@
         font-family: 'Roboto', sans-serif;
     }
     .modpopup {
-        width: 5 vw;
-        height: 5 vh;
-        background-color: aqua;
+        background-color: @theme[background-primary];
+        vertical-align: bottom;
+        height: 15vh;
+        width: 10vw;
+        border: .25vw;
+        padding: 0px;
+        border-style: solid;
+        border-color: @theme[background-secondary];
+        color: @theme[text-primary];
+    }
+    .banbutton {
+        width: 5vw;
+        height: 3vh;
+        margin: .5vh .25vw 0px .5vw;
 
+        display: inline-block;
 
+        border: none;
+        border-radius: 4px;
+        
+        background-color: red;
+        cursor: pointer;
+        
+        color: @theme[text-primary];
+        font-size:18px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 600;
+    }
+    .promotebutton {
+        width: 5vw;
+        height: 3vh;
+        margin: .5vh .25vw 0px .5vw;
+
+        display: inline-block;
+
+        border: none;
+        border-radius: 4px;
+        
+        background-color: green;
+        cursor: pointer;
+        
+        color: @theme[text-primary];
+        font-size:18px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 600;
+    }
+    .demotebutton {
+        width: 5vw;
+        height: 3vh;
+        margin: .5vh .25vw 0px .5vw;
+
+        display: inline-block;
+
+        border: none;
+        border-radius: 4px;
+        
+        background-color: rgb(119, 119, 1);
+        cursor: pointer;
+        
+        color: @theme[text-primary];
+        font-size:18px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 600;
     }
 }

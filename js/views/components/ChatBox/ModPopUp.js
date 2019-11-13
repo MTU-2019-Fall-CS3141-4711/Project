@@ -1,12 +1,19 @@
 var m = require("mithril");
+var BanButton = require("./BanButton");
+var PardonButton = require("./PardonButton");
+var PromoteButton = require("./PromoteButton");
+var DemoteButton = require("./DemoteButton");
+var CloseButton = require("./CloseButton");
 
 var ModPopUp = {
-    visbility: false, 
+    user: "Steve",
     view: (vnode) =>  {
-        return m("section", {class: "modpopup"}, [
-            //ban button
-            //mod button
-            //closebutton
+        return m("section", {class: "chatboxmessage"}, [
+            m(BanButton),
+            m(PardonButton),
+            m(PromoteButton),
+            m(DemoteButton),
+            m(CloseButton)
         ])
     }
 
