@@ -8,7 +8,7 @@ var ChatUser = require("./ChatUser");
 var ChatList = {
     view: (vnode) => {
         return m("section", {class: "chatboxmessage"}, Object.keys(RoomState.users).map((i) => {
-            return m(ChatUser, {user: RoomState.users[i]});
+            return m(ChatUser, {userid: i});
         }));
     }
 }
