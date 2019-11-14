@@ -6,7 +6,7 @@ var PardonButton = {
             onclick: () => {
                 var User = require("../../../models/User");
                 var ModPopUp = require("./ModPopUp");
-                User.PardonUser(ModPopUp.user);
+                User.pardonUser(ModPopUp.user);
             }    
     })
     }

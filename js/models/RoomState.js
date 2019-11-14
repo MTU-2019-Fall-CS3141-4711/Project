@@ -64,6 +64,11 @@ var RoomState = {
                 });
                 m.redraw();
             });
+            Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+            .collection("banned_users")
+            .onSnapshot( (snapshot) => {
+                
+            });
     }
 }
 

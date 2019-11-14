@@ -150,7 +150,7 @@ var User = {
     banUser: (userID) => {
         if(!User.isModerator){ return; }
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
-            .collection("baned_users").doc(userID).set({
+            .collection("banned_users").doc(userID).set({
                 exists: true
             });
     },
@@ -161,7 +161,7 @@ var User = {
     pardonUser: () => {
         if(!User.isModerator){ return; }
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
-        .   collection("baned_users").doc(userID).delete();
+        .   collection("banned_users").doc(userID).delete();
     },
 
     /**

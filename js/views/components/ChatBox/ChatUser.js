@@ -6,7 +6,7 @@ var ChatUser = {
     view: (vnode) => {
         return m("input[type=button]", {class:"chatuserbutton", value: RoomState.users[vnode.attrs.userid],
             onclick: () => {
-            if(User.isModerator()){
+            if(User.isModerator){
                 var ModPopUp = require("./ModPopUp");
                 var ChatBox = require("./ChatBox");
                 ChatBox.ChatTab = 2;

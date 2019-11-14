@@ -6,7 +6,7 @@ var DemoteButton = {
             onclick: () => {
                 var User = require("../../../models/User");
                 var ModPopUp = require("./ModPopUp");
-                User.banUser(ModPopUp.user);
+                User.demoteUser(ModPopUp.user);
             }    
     })
     }
