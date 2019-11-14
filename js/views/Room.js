@@ -25,7 +25,11 @@ var YTVideIframe = require("../models/YTVideoIframe");
             - Video Player
             - Video Queue
 */
+var loadUrlID = "M7lc1UVf-VE";
 var Room = {
+    setloadID: (loadID) =>{
+        loadUrlID = loadID;
+    },
     oninit: (vnode) => {
         RoomState.constructExisting(vnode.attrs.roomid);
         User.construct().then( () => {
@@ -36,7 +40,7 @@ var Room = {
     },
     oncreate: () => {
         YTVideIframe.enableDisplay();
-        YTVideIframe.loadVideo("M7lc1UVf-VE");
+        YTVideIframe.loadVideo(loadUrlID);
         YTVideIframe.stopPlayer();
     },
     view: (vnode) => {
