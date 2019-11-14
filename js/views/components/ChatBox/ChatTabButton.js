@@ -5,7 +5,7 @@ var ChatTabButton = {
         return m("input[type=button]", {class: "chattabbutton", value: "Chat!", 
             onclick: () => {
                 var ChatBox = require("./ChatBox");
-                ChatBox.ChatTab = true;
+                ChatBox.ChatTab = 0;
             }
         });
     } 
