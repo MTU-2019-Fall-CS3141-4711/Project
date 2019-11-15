@@ -158,7 +158,7 @@ var User = {
     /**
      * Unban user with userID
      */
-    pardonUser: () => {
+    pardonUser: (userID) => {
         if(!User.isModerator){ return; }
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
         .   collection("banned_users").doc(userID).delete();
