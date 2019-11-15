@@ -8,7 +8,7 @@ var targ = null;
 var title="";
 let QueueButton = {
     setTitle: (value) =>{
-        title = value;
+        title = value.trim();
     },
     setTarg: (value) =>{
         targ = value;
@@ -29,7 +29,10 @@ let QueueButton = {
                         VideoQueue.clearQueue();
                     }
                 }else{
-                    Queue.enqueue(title);
+                    title=title.trim();
+                    if(title.length!=0){
+                        Queue.enqueue(title);
+                    }
                 }
                 TextBox.clear(targ);
             },

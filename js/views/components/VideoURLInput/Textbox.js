@@ -40,8 +40,20 @@ let Textbox = {
                             VideoQueue.clearQueue();
                         }
                     }else{
-
-                        Queue.enqueue(e.target.value);
+                        if(window.location.hash==""){
+                            
+                            if(e.target.value!=null && e.target.value!=""){
+                                var title = e.target.value.trim();
+                                var QueuedVideo = require("./../MainVideoContent/QueuedVideo");
+                                title = QueuedVideo.urlSplitter(title); // returns ID
+                                if(title.length==11){
+                                    var Room = require("./../../Room");
+                                    Room.setloadID(title);
+                                }
+                            }
+                            m.route.set("/new");
+                        }
+                        else {Queue.enqueue(e.target.value);}
                     }
                     
                     Textbox.clear(e.target);

@@ -33,6 +33,10 @@ var Queue = {
             });
     },
     enqueue: (URL) =>{
+       /*
+        * Fixes bug where a blank URL will get queued on room creation 
+        */
+        
         /**
          * Create a document (queued item) in the queue collection
          */

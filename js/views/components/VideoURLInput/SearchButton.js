@@ -5,7 +5,7 @@ var targ = null;
 var title="";
 let SearchButton = {
     setTitle: (value) =>{
-        title = value;
+        title = value.trim();
     },
     setTarg: (value) =>{
         targ = value;
@@ -17,7 +17,6 @@ let SearchButton = {
             /* Button Text */
             value:"Watch!",
             onclick: () => {
-                
                 if(title!=null && title!=""){
                     var QueuedVideo = require("./../MainVideoContent/QueuedVideo");
                     title = QueuedVideo.urlSplitter(title); // returns ID
