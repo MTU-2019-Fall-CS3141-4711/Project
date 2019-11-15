@@ -2,7 +2,7 @@
 var functions = require("firebase-functions");
 var admin = require("firebase-admin");
 
-exports.onUserPresenceChange = functions.database.ref("{room_id}/{uid}").onWrite(
+exports.onUserPresenceChange = functions.database.ref("{room_id}/users/{uid}").onWrite(
     async(change, context) => {
         // If the value dne, then an onDisconnect() delete just occured and they should be
         // removed from the userlist
