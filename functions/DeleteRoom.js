@@ -5,13 +5,13 @@ var admin = require("firebase-admin");
  * Everytime a user leaves the room, check if they are the last one
  * If they are, delete the room in both databases
  */
-exports.onUserLeaveRoom = functions.database.ref("{room_id}/{user_id}").onDelete(
+exports.onUserLeaveRoom = functions.database.ref("{room_id}/users/{user_id}").onDelete(
     async(snapshot, context) => {
         // Check if there are any entires in the user list
         let hasUsers = true;
-        await admin.database().ref(context.params.room_id).once("value")
+        await admin.database().ref(context.params.room_id + "/users").once("value")
             .then( (snapshot) => {
-                hasUsers = snapshot.hasChildren();
+                hasUsers = snapshot.numChildren();
             });
 
         // If there are not any users, delete the room in both databases
