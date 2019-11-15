@@ -1,7 +1,7 @@
 var m = require("mithril");
 var YT = require("youtube-player");
-var Firebase = require("firebase/app");
-require("firebase/firebase-firestore");
+var Firebase = require ("firebase/app");
+require("firebase/firestore");
 
 var RoomState = require("./RoomState");
 var User = require("./User");
