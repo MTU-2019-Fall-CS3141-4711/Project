@@ -12,9 +12,12 @@ var DrawingCanvas = {
     oncreate: function(vnode) {
         Canvas.registerCanvas(vnode.dom);
     },
+    onupdate: () => {
+        Canvas.repaint();
+    },
     view: () => {
         let relWidth = Math.floor((window.innerWidth / 100) * 65);
-        let relHeight =  Math.floor((window.innerHeight / 100) * 65)
+        let relHeight =  Math.floor((window.innerHeight / 100) * 65);
         return m("canvas", {
             class: "annotation-canvas",
             width: relWidth,
