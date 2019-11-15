@@ -11,7 +11,7 @@ exports.onUserLeaveRoom = functions.database.ref("{room_id}/users/{user_id}").on
         let hasUsers = true;
         await admin.database().ref(context.params.room_id + "/users").once("value")
             .then( (snapshot) => {
-                hasUsers = snapshot.numChildren();
+                hasUsers = snapshot.hasChildren();
             });
 
         // If there are not any users, delete the room in both databases
