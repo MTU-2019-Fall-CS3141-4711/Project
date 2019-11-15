@@ -1,25 +1,86 @@
-var ToolbarState = require("./ToolbarState");
-var User = require("./User");
+var Firebase = require("firebase/app");
+require("firebase/database");
 
-var YTVideoFrame = require("./YTVideoIframe");
+var RoomState = require("./RoomState");
 
 var Canvas = {
+    isDrawing: false,
+    context: null,
+    width: 1,
+    height: 1,
+    sX: 0,
+    sY: 0,
     construct: () => {
+        /**
+         * Listen for things being drawn
+         * The paint data is stored with sXsYeXeY as keys so if someone draws something
+         * that would overwrite that existing spot we need to listen for "child_changed"s too.
+         */
+        Firebase.database().ref(RoomState.Room_ID + "/canvas").on("child_added", (snapshot) =>{
+            let data = snapshot.val();
+            if(data == null){ return; }
+            Canvas.paint(data.sX, data.sY, data.eX, data.eY);
+        });
 
+        Firebase.database().ref(RoomState.Room_ID + "/canvas").on("child_changed", (snapshot) =>{
+            let data = snapshot.val();
+            if(data == null){ return; }
+            Canvas.paint(data.sX, data.sY, data.eX, data.eY);
+        });
     },
 
+    /**
+     * Pass a reference to the Canvas that was actually generated
+     * so we can draw on it.
+     */
     registerCanvas: (c) => {
         Canvas.context = c.getContext("2d");
+        Canvas.context.strokeStyle = 'black';
+        Canvas.context.lineWidth = 4;
+        Canvas.width = c.clientHeight;
+        Canvas.height = c.clientWidth;
     },
 
-    click: (e) => {
-        if(ToolbarState.getTool() == ToolbarState.POINTER && User.isHost){
-            YTVideoFrame.togglePlaybackLocal();
-        }
+    /**
+     * Send the canvas data to Firestore
+     * Our local listener will pick up the changes and draw them
+     */
+    drawLine: (startX, startY, endX, endY) => {
+        let hash = "" + startX + startY + endX + endY;
+        Firebase.database().ref(RoomState.Room_ID + "/canvas/" + hash).set({
+            sX: startX,
+            sY: startY,
+            eX: endX,
+            eY: endY,
+            c: "#000"
+        });
+
+        Canvas.sX = endX;
+        Canvas.sY = endY;
     },
 
-    drawRect: () => {
-        Canvas.context.drawRect(150, 150, 100, 100);
+    /**
+     * Actually put marks on the Canvas
+     */
+    paint: (sX, sY, eX, eY) => {
+        Canvas.context.beginPath();
+        Canvas.context.moveTo(sX, sY);
+        Canvas.context.lineTo(eX, eY);
+        Canvas.context.stroke();
+        Canvas.context.closePath(); 
+    },
+
+    /**
+     * Repaint the whole Canvas - for when it Mithril.redraws();
+     */
+    repaint: () =>{
+        Firebase.database().ref(RoomState.Room_ID + "/canvas").once("value").then( (snapshot) => {
+            snapshot.forEach( (childSnapshot) => {
+                let data = childSnapshot.val();
+                if(data == null){ return; }
+                Canvas.paint(data.sX, data.sY, data.eX, data.eY);
+            });
+        });
     }
 }
 

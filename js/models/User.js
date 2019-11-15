@@ -96,13 +96,13 @@ var User = {
              * once the server acknowledges that it has registered our disconnect task. It does not 
              * resolve once we actually disconnect. When we actually disconnect it will call the .remove()
              */
-            Firebase.database().ref(RoomState.Room_ID + "/" + Session.getUid())
+            Firebase.database().ref(RoomState.Room_ID + "/users/" + Session.getUid())
                 .onDisconnect().remove().then( () => {
                     /**
                      * Mark ourselves as being online now that the server knows what to do when
                      * we go offline. This fires everytime we go online.
                      */
-                    Firebase.database().ref(RoomState.Room_ID + "/"+ Session.getUid())
+                    Firebase.database().ref(RoomState.Room_ID + "/users/"+ Session.getUid())
                         .set({
                             name: User.username
                         });
