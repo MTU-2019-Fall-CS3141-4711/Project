@@ -1,3 +1,8 @@
+var Firebase = require("firebase/app");
+require("firebase/database");
+
+var RoomState = require("./RoomState");
+
 var Canvas = {
     isDrawing: false,
     context: null,
@@ -6,7 +11,19 @@ var Canvas = {
     sX: 0,
     sY: 0,
     construct: () => {
+        Firebase.database().ref(RoomState.Room_ID + "/canvas").on("child_added", (snapshot) =>{
+            let data = snapshot.val();
+            console.log(data);
+            if(data == null){ return; }
+            Canvas.paint(data.sX, data.sY, data.eX, data.eY);
+        });
 
+        Firebase.database().ref(RoomState.Room_ID + "/canvas").on("child_changed", (snapshot) =>{
+            let data = snapshot.val();
+            console.log(data);
+            if(data == null){ return; }
+            Canvas.paint(data.sX, data.sY, data.eX, data.eY);
+        });
     },
 
     registerCanvas: (c) => {
@@ -17,15 +34,30 @@ var Canvas = {
         Canvas.height = c.clientWidth;
     },
 
+    /**
+     * Send the canvas data to Firestore
+     * Our local listener will pick up the changes and draw them
+     */
+    drawLine: (startX, startY, endX, endY) => {
+        let hash = "" + startX + startY + endX + endY;
+        Firebase.database().ref(RoomState.Room_ID + "/canvas/" + hash).set({
+            sX: startX,
+            sY: startY,
+            eX: endX,
+            eY: endY,
+            c: "#000"
+        });
+
+        Canvas.sX = endX;
+        Canvas.sY = endY;
+    },
+
     paint: (sX, sY, eX, eY) => {
         Canvas.context.beginPath();
         Canvas.context.moveTo(sX, sY);
         Canvas.context.lineTo(eX, eY);
         Canvas.context.stroke();
-        Canvas.context.closePath();
-
-        Canvas.sX = eX;
-        Canvas.sY = eY;
+        Canvas.context.closePath(); 
     }
 
 }
