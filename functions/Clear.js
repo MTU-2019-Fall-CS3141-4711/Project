@@ -76,9 +76,8 @@ exports.clear = functions.https.onRequest(
             // Delete the room itself
             await roomRef.delete();
             
-            //these console.logs probably aren't actually visible anywhere
             console.log("Cleared "+room_id);
-        }else{console.log(room_id + "survived clear")}
+        }else{console.log(room_id + " survived clear")}
         
     });
     
