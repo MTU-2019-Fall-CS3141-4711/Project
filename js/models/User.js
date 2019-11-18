@@ -181,6 +181,9 @@ var User = {
     },
     isBannedFunc: () => {
         return User.isBanned;
+    },
+    isModdedFunc: () => {
+        return User.isModerator;
     }
 }
 

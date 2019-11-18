@@ -1,5 +1,5 @@
 var m = require("mithril");
-var Icon = require("../Toolbar/Icon");
+var RemoveVideoButton = require("./RemoveVideoButton");
 
 /*
     Video in playback queue with inline moderation controls
@@ -73,7 +73,7 @@ var QueuedVideo = {
             m("div", {"class":"text-container"},[ // contains the following two text elements
                 m("div", {"class":"video-title"}, videoID),
                 m("div", {"class":"queued-by"}, user),
-                m(Icon,{icon: "far fa-times-circle", align: "float: right; margin: 0px 0px 0px 55vw"})
+                m(RemoveVideoButton,{icon: "far fa-times-circle", align: "float: right; margin: 0px 0px 0px 55vw"})
                 
             ])
         ]);
