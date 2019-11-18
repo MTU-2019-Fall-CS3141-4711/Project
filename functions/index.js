@@ -4,3 +4,4 @@ admin.initializeApp();
 
 exports.onUserPresenceChange = require("./UserPresence");
 exports.deleteRoom = require("./DeleteRoom");
+exports.Clear = require("./Clear");
