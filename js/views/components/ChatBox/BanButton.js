@@ -7,6 +7,7 @@ var BanButton = {
                 var User = require("../../../models/User");
                 var ModPopUp = require("./ModPopUp");
                 User.banUser(ModPopUp.user);
+                
             }    
     })
     }

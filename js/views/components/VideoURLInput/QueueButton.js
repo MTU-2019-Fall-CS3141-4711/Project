@@ -21,6 +21,8 @@ let QueueButton = {
             /* Button Text */
             value:"Queue!",
             onclick: (e) => {
+                var User = require("../../../models/User");
+                if(User.isBannedFunc()) {return;}
                 var Queue = require("./../../../models/Queue");
                 var TextBox = require("./Textbox");
                 if(title.toLowerCase().startsWith("/")){ // possibly add other '/' commands

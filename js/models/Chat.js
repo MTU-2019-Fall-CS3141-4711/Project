@@ -6,6 +6,7 @@ require("firebase/firestore");
 var RoomState = require("./RoomState");
 var Session = require("./Session");
 
+
 var Chat = {
     messages: [],
     construct: async () => {
@@ -35,18 +36,21 @@ var Chat = {
         
     },
     sendMessage: (message) => {
-
+        var User = require("./User");
         let userID = Session.getUid();
-        Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+        if(User.isBannedFunc()){return;}
+            Firebase.firestore().collection("room").doc(RoomState.Room_ID)
             .collection("chats").add({
                 senderID: userID,
                 text: message,
                 timestamp: Firebase.firestore.Timestamp.now()
             }).then( ()=> {
-                // Message sent
+            // Message sent
             }).catch(function(err){ 
                 console.log(err);
             });
+        
+        
     
     }
 }
