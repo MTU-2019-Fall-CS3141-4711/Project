@@ -30,8 +30,11 @@ var DrawingCanvas = {
             onmousedown: (e) => {
                 if(ToolbarState.getTool() == ToolbarState.BRUSH){
                     Canvas.isDrawing = true;
-                    Canvas.sX = e.clientX;
-                    Canvas.sY = e.clientY;
+                    let rel = e.target.getBoundingClientRect();
+                    let x = Math.floor(e.clientX - rel.left);
+                    let y = Math.floor(e.clientY - rel.top);
+                    Canvas.sX = x;
+                    Canvas.sY = y;
                 }
             },
             onmouseup: () => {
