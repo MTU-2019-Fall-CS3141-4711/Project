@@ -16,7 +16,8 @@ var Toolbar = {
             m("div", {class:"icon-wrapper"}, [
                 m(Icon,{icon:"fas fa-mouse-pointer", tool: ToolbarState.POINTER}),
                 m(Icon,{icon:"fas fa-paint-brush", tool: ToolbarState.BRUSH}),
-                m(Icon,{icon:"fas fa-eraser", tool: ToolbarState.ERASER})
+                m(Icon,{icon:"fas fa-eraser", tool: ToolbarState.ERASER}),
+                m(Icon, {icon:"fas fa-palette", tool: ToolbarState.COLOR})
             ])
         );
     }
