@@ -1,0 +1,16 @@
+name: Clear-Firebase
+
+on:
+  schedule:
+    - cron: '55 02 * * *'
+
+jobs:
+  clear-firebase:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    - name: Install curl
+      run: apt install curl
+    - name: Run a multi-line script
+      run: curl --connect-timeout 60 https://us-central1-youtwobe-video-viewer.cloudfunctions.net/Clear-clear 
