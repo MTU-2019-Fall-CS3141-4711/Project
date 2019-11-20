@@ -9,7 +9,8 @@ var ChatBoxMessage = {
         return m("div", {class: "chatboxmessage"},
             Chat.messages.map( (i) => {
                 return m(ChatMessage, {
-                    user: RoomState.getUsername(i.senderID), 
+                    user: RoomState.getUsername(i.senderID),
+                    style: i.style, 
                     message: i.text
                 });
             })

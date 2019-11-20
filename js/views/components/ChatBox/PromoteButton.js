@@ -6,7 +6,12 @@ var PromoteButton = {
             onclick: () => {
                 var User = require("../../../models/User");
                 var ModPopUp = require("./ModPopUp");
+                var Chat = require("../../../models/Chat");
                 User.promoteUser(ModPopUp.user);
+                promoteduser = ModPopUp.username;
+                message = " has been promoted.";
+                message = promoteduser + message;
+                Chat.sendMessage(message, "informative");
             }    
     })
     }

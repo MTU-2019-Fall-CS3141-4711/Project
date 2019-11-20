@@ -10,7 +10,7 @@ var ChatBoxText = {
                 if(e.keyCode == 13){
                     var msg = ChatBoxText.getTextAreaMessage();
                     if(msg.trim().length!=0){
-                        Chat.sendMessage( msg );
+                        Chat.sendMessage( msg, "regular" );
                     }
                     ChatBoxText.clearTextArea();
                 }

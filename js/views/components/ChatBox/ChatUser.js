@@ -12,6 +12,7 @@ var ChatUser = {
                 var ChatBox = require("./ChatBox");
                 ChatBox.ChatTab = 2;
                 ModPopUp.user = vnode.attrs.userid;
+                ModPopUp.username = RoomState.users[vnode.attrs.userid];
             }
         }});
     }

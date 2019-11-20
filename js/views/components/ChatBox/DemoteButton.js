@@ -6,7 +6,12 @@ var DemoteButton = {
             onclick: () => {
                 var User = require("../../../models/User");
                 var ModPopUp = require("./ModPopUp");
+                var Chat = require("../../../models/Chat");
                 User.demoteUser(ModPopUp.user);
+                demoteduser = ModPopUp.username;
+                message = " has been demoted.";
+                message = demoteduser + message;
+                Chat.sendMessage(message, "informative");
             }    
     })
     }

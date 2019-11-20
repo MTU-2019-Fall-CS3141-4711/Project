@@ -28,14 +28,15 @@ var Chat = {
                     
                     Chat.messages.push({
                         senderID: docRef.data().senderID,
-                        text: docRef.data().text
+                        text: docRef.data().text,
+                        style: docRef.data().style
                     });
                 });
                 m.redraw();
             });
         
     },
-    sendMessage: (message) => {
+    sendMessage: (message, type) => {
         var User = require("./User");
         let userID = Session.getUid();
         if(User.isBannedFunc()){return;}
@@ -43,6 +44,7 @@ var Chat = {
             .collection("chats").add({
                 senderID: userID,
                 text: message,
+                style: type,
                 timestamp: Firebase.firestore.Timestamp.now()
             }).then( ()=> {
             // Message sent

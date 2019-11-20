@@ -7,6 +7,7 @@ var CloseButton = require("./CloseButton");
 
 var ModPopUp = {
     user: "Steve",
+    username: "Paul",
     view: (vnode) =>  {
         return m("section", {class: "chatboxmessage"}, [
             m(BanButton),
