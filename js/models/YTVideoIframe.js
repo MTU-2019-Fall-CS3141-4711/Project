@@ -30,7 +30,7 @@ var YTVideoFrame = {
 
                 if(data.video != "" && data.video != YTVideoFrame.Playback.video){
                     YTVideoFrame.Playback = data;
-                    YTVideoFrame.Player.loadVideoByUrl(data.video).then( ()=> {
+                    YTVideoFrame.Player.loadVideoById(data.video).then( ()=> {
                         YTVideoFrame.syncPlayback();
                     });
                 }else{
@@ -69,9 +69,10 @@ var YTVideoFrame = {
 
     startPlayerLocal: () => { YTVideoFrame.Player.playVideo(); },
     pausePlayerLocal: () => { YTVideoFrame.Player.pauseVideo(); },
-    loadVideoLocal: (videoURL) => { 
-        YTVideoFrame.Player.loadVideoByUrl(videoURL);
-        YTVideoFrame.Playback = { state: 1, time: 0, updated: 0, video: videoURL }; 
+    loadVideoLocal: (videoID) => { 
+        console.log(videoID);
+        YTVideoFrame.Player.loadVideoById(videoID);
+        YTVideoFrame.Playback = { state: 1, time: 0, updated: 0, video: videoID }; 
         YTVideoFrame.updatePlaybackRemote(1);
     },
 
@@ -132,7 +133,7 @@ var YTVideoFrame = {
             if(nextVideo != null){
                 YTVideoFrame.Playback.video = nextVideo.url;
                 YTVideoFrame.updatePlaybackRemote(1);
-                YTVideoFrame.Player.loadVideoByUrl(nextVideo.url);
+                YTVideoFrame.Player.loadVideoById(nextVideo.url);
             }
 
         }else if(state == YTVideoFrame.PlayerState.PAUSED || state == YTVideoFrame.PlayerState.BUFFERING || state == YTVideoFrame.PlayerState.PLAYING){

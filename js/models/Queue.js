@@ -24,7 +24,7 @@ var Queue = {
                 snapshot.docs.forEach( (docRef) => {
                     Queue.q.push({
                         docId: docRef.id,
-                        url: docRef.data().url,
+                        vID: docRef.data().vID,
                         user: docRef.data().user
                     })
                 });
@@ -38,18 +38,28 @@ var Queue = {
      * here is messy, but faster to write for now.
      */
     enqueue: (URL) =>{
-        
+        /**
+         * Extracts video ideas from most YouTube URLs
+         * Borowed from https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url/27728417#27728417
+         */
+        let rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+        res = URL.match(rx);
+        if(res.length < 1){
+            return;
+        }
+
+        let videoID = res[1];
         /**
         * Create a document (queued item) in the queue collection
         */
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
         .collection("queue").add({
-            url: URL,
+            vID: videoID,
             user: Session.getUid()
 
         }).then( () => {
             if(User.isHost && YTVideoFrame.Playback.video == ""){
-                YTVideoFrame.loadVideoLocal(Queue.dequeue().url);
+                YTVideoFrame.loadVideoLocal(Queue.dequeue().vID);
             }
 
         });
