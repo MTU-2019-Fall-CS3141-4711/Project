@@ -1,10 +1,9 @@
 let m = require("mithril");
 let Firebase = require("firebase/app");
 let RoomState = require("./RoomState");
-var Session = require("../models/Session");
-var VideoQueue = require("./../views/components/MainVideoContent/VideoQueue");
-
-// Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+var Session = require("./Session");
+var User = require("./User");
+var YTVideoFrame = require("./YTVideoIframe");
 
 var Queue = {
     q: [],
@@ -24,33 +23,56 @@ var Queue = {
                 Queue.q = [];
                 snapshot.docs.forEach( (docRef) => {
                     Queue.q.push({
+                        docId: docRef.id,
                         url: docRef.data().url,
                         user: docRef.data().user
                     })
                 });
                 m.redraw();
-                //console.log(snapshot);
             });
     },
+
+    /**
+     * Optional TODO: The queue should implement an observable design paradigm
+     * so that the queue triggering logic can go in YTVideoFrame because having it
+     * here is messy, but faster to write for now.
+     */
     enqueue: (URL) =>{
+        
         /**
-         * Create a document (queued item) in the queue collection
-         */
+        * Create a document (queued item) in the queue collection
+        */
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
-            .collection("queue").add({
-                url: URL,
-                user: Session.getUid()
-            });
+        .collection("queue").add({
+            url: URL,
+            user: Session.getUid()
+
+        }).then( () => {
+            if(User.isHost && YTVideoFrame.Playback.video == ""){
+                YTVideoFrame.loadVideoLocal(Queue.dequeue().url);
+            }
+
+        });
     },
 
     // not needed yet, but for will when we grab a new video from the queue
     dequeue: ()=>{
-        if(arrayQueue.length>0){
-            return arrayQueue.pop();
+        if(Queue.q.length>0){
+            let nextVideo = Queue.q.pop();
+            
+            //Delete the video from the queue
+            Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+            .collection("queue").doc(nextVideo.docId).delete();
+            
+            return nextVideo;
+
         }else{
             console.error("Queue is empty and we cannot dequeue - Queue.js");
+            return null;
+            
         }
     },
+
     clearQueue: ()=>{
         /**
          * Get the documents (videos) in the queue and delete them one by one
