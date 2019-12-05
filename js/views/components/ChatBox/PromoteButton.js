@@ -8,6 +8,7 @@ var PromoteButton = {
                 var ModPopUp = require("./ModPopUp");
                 var Chat = require("../../../models/Chat");
                 User.promoteUser(ModPopUp.user);
+                User.pardonUser(ModPopUp.user);
                 promoteduser = ModPopUp.username;
                 message = " has been promoted.";
                 message = promoteduser + message;
