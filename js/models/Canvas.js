@@ -45,14 +45,14 @@ var Canvas = {
      * Send the canvas data to Firestore
      * Our local listener will pick up the changes and draw them
      */
-    drawLine: (startX, startY, endX, endY) => {
+    drawLine: (startX, startY, endX, endY, color) => {
         let hash = "" + startX + startY + endX + endY;
         Firebase.database().ref(RoomState.Room_ID + "/canvas/" + hash).set({
             sX: startX,
             sY: startY,
             eX: endX,
             eY: endY,
-            c: "#000"
+            c: color
         });
 
         Canvas.sX = endX;
@@ -62,10 +62,11 @@ var Canvas = {
     /**
      * Actually put marks on the Canvas
      */
-    paint: (sX, sY, eX, eY) => {
+    paint: (sX, sY, eX, eY, color) => {
         Canvas.context.beginPath();
         Canvas.context.moveTo(sX, sY);
         Canvas.context.lineTo(eX, eY);
+        Canvas.context.strokeStyle = color;
         Canvas.context.stroke();
         Canvas.context.closePath(); 
     },
@@ -78,7 +79,7 @@ var Canvas = {
             snapshot.forEach( (childSnapshot) => {
                 let data = childSnapshot.val();
                 if(data == null){ return; }
-                Canvas.paint(data.sX, data.sY, data.eX, data.eY);
+                Canvas.paint(data.sX, data.sY, data.eX, data.eY, data.c);
             });
         });
     }
