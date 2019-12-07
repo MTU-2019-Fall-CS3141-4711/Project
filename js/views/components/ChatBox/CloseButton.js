@@ -1,16 +1,13 @@
 var m = require("mithril");
 
-var ChatListTabButton = {
+var CloseButton = {
     view: (vnode) => {
-        return m("input[type=button]", {class: "chatlisttabbutton", value: "Users!", 
+        return m("input[type=button]", {class: "banbutton", value: "X", 
             onclick: () => {
                 var ChatBox = require("./ChatBox");
                 ChatBox.ChatTab = 1;
-            }
-        });
+            }    
+    })
     }
 }
-
-
-
-module.exports = ChatListTabButton;
+module.exports = CloseButton;

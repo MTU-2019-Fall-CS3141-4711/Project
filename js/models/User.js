@@ -11,9 +11,7 @@ var User = {
 
     isBanned: false,
     isModerator: false,
-    isBanned: () => { return User.isBanned; },
-    isModerator: () => { return User.isModerator; },
-
+    isHost: false,
     /**
      * Pulls as necesary permission information and registers user with the server
      */
@@ -60,12 +58,20 @@ var User = {
             m.redraw();
         });
 
-         /**
-         * REFERENCE: https://firebase.google.com/docs/firestore/solutions/presence
-         * Register listener so application knows when it's lost connection to chat.
-         * .info/connected is a special Database path and will fire everytime the user connects
-         * or disconnects. 
-         */
+        // Check if we're hosting - await because we need this to initialize snapshot listeners for video playback
+        let hostRef = Firebase.firestore().collection("room").doc(RoomState.Room_ID);
+        await hostRef.get().then( (snapshot) => {
+            if(snapshot.data().host == Session.getUid()){
+                User.isHost = true;
+            }
+        });
+
+        /**
+        * REFERENCE: https://firebase.google.com/docs/firestore/solutions/presence
+        * Register listener so application knows when it's lost connection to chat.
+        * .info/connected is a special Database path and will fire everytime the user connects
+        * or disconnects. 
+        */
         Firebase.database().ref(".info/connected").on("value", (snapshot) => {
             /**
              * When connection state changes to false (disocnnect) remove ourselfs from the 
@@ -90,13 +96,13 @@ var User = {
              * once the server acknowledges that it has registered our disconnect task. It does not 
              * resolve once we actually disconnect. When we actually disconnect it will call the .remove()
              */
-            Firebase.database().ref(RoomState.Room_ID + "/" + Session.getUid())
+            Firebase.database().ref(RoomState.Room_ID + "/users/" + Session.getUid())
                 .onDisconnect().remove().then( () => {
                     /**
                      * Mark ourselves as being online now that the server knows what to do when
                      * we go offline. This fires everytime we go online.
                      */
-                    Firebase.database().ref(RoomState.Room_ID + "/"+ Session.getUid())
+                    Firebase.database().ref(RoomState.Room_ID + "/users/"+ Session.getUid())
                         .set({
                             name: User.username
                         });
@@ -144,7 +150,7 @@ var User = {
     banUser: (userID) => {
         if(!User.isModerator){ return; }
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
-            .collection("baned_users").doc(userID).set({
+            .collection("banned_users").doc(userID).set({
                 exists: true
             });
     },
@@ -152,10 +158,10 @@ var User = {
     /**
      * Unban user with userID
      */
-    pardonUser: () => {
+    pardonUser: (userID) => {
         if(!User.isModerator){ return; }
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
-        .   collection("baned_users").doc(userID).delete();
+        .   collection("banned_users").doc(userID).delete();
     },
 
     /**

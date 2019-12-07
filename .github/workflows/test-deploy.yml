@@ -23,15 +23,24 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm install
-        npm test
+        npm run-script test-coverage
         npm run deploy --if-present
       env:
         CI: true
         FIREBASE_API_KEY: ${{ secrets.firebase_api_key }}
+    - name: Deploy Firebase actions
+      run: |
+        npm install --prefix ./functions/ ./functions/
+        npm install -g firebase-tools
+        firebase use --token "$FIREBASE_CI_KEY" youtwobe
+        firebase deploy --token "$FIREBASE_CI_KEY" --only functions
+      env:
+        CI: true
+        FIREBASE_API_KEY: ${{ secrets.firebase_api_key }}
+        FIREBASE_CI_KEY: ${{ secrets.FIREBASE_CI_KEY }}
     - name: Deploy page
       uses: peaceiris/actions-gh-pages@v2.5.0
       env:
         ACTIONS_DEPLOY_KEY: ${{ secrets.GH_ACTIONS_DEPLOY_KEY }}
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: bin
-

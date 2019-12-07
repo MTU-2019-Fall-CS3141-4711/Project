@@ -10,6 +10,7 @@ let QueueButton = {
     setTitle: (value) =>{
         title = value;
     },
+    getTitle: () => { return title; },
     setTarg: (value) =>{
         targ = value;
     },

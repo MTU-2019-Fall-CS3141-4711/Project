@@ -13,32 +13,20 @@ var RoomState = {
     constructExisting: (room_id) => {
         // Get the room id from URI
         RoomState.Room_ID = room_id;
-
-        return new Promise( (resolve, reject) => {
-            // Get the information about the room
-            Firebase.firestore().collection("room").doc(RoomState.Room_ID).get()
-            .then( (snapshot) =>{
-                let data = snapshot.data();
-                data.is_playing;
-                data.playback_time;
-                data.playback_last_update;
-                RoomState.initializeListeners();
-
-                resolve();
-                return;
-            }).catch( (err) => {
-                reject(err);
-                return;
-            });
-        });
+        RoomState.initializeListeners();
+    
     },
     createNew: (vnode) => {
         return new Promise( (resolve, reject) =>{
             // Create the room with default attributes
             Firebase.firestore().collection("room").add({
-                is_playing: false,
-                playback_time: 0,
-                playback_last_update: 0
+                playback: {
+                    state: -1,
+                    time: 0,
+                    last_update: 0,
+                    video: ""
+                },
+                host: Session.getUid()
             }).then( async (docRefence)=> {
 
                 // Set us as a moderator for this newley created room
