@@ -44,7 +44,7 @@ var Queue = {
          */
         let rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
         res = URL.match(rx);
-        if(res.length < 1){
+        if(typeof res == "undefined" || res == null || res.length < 1){
             return;
         }
 

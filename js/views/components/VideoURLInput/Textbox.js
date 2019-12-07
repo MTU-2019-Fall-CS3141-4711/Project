@@ -1,4 +1,5 @@
 let m = require("mithril");
+let RoomState = require("../../../models/RoomState");
 let QueueButton = require("./QueueButton");
 let VideoQueue = require("./../MainVideoContent/VideoQueue");
 
@@ -27,24 +28,25 @@ let Textbox = {
                 //setEvent(e);
             },
             onkeypress: function (e) {
-                //console.log("Textbox.view(vnode).onkeypress(e) executed");
                 var Queue = require("./../../../models/Queue");
-                //console.log(e+" "+ e.target+" "+e.target.value+" "+e.keyCode);
                 QueueButton.setTarg(e.target);
-                if(e.keyCode==13){
-                    //console.log("Enter was hit");
+                if(e.keyCode==13 && RoomState.Room_ID != null){
                     if(e.target.value.toLowerCase().startsWith("/")){ // possibly add other '/' commands
                         if(e.target.value.toLowerCase()=="/clear"){
                             Queue.clearQueue();
                             VideoQueue.clearQueue();
                         }
                     }else{
-                       //console.log("Queue.enqueue called from textbox");
                         Queue.enqueue(e.target.value, "Username");
                     }
                     
-                    //VideoQueue.enqueue(e.target.value, "Username"); // TODO: pull username from firebase
                     Textbox.clear(e.target);
+                }
+
+                // Create a new room if we're not in a room
+                if(e.keyCode == 13 && RoomState.Room_ID ==  null){
+                    /* Redirect the user to /:roomid */
+                    m.route.set("/new");   
                 }
             },
             
