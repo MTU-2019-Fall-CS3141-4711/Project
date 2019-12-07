@@ -19,13 +19,13 @@ var Canvas = {
         Firebase.database().ref(RoomState.Room_ID + "/canvas").on("child_added", (snapshot) =>{
             let data = snapshot.val();
             if(data == null){ return; }
-            Canvas.paint(data.sX, data.sY, data.eX, data.eY);
+            Canvas.paint(data.sX, data.sY, data.eX, data.eY, data.c);
         });
 
         Firebase.database().ref(RoomState.Room_ID + "/canvas").on("child_changed", (snapshot) =>{
             let data = snapshot.val();
             if(data == null){ return; }
-            Canvas.paint(data.sX, data.sY, data.eX, data.eY);
+            Canvas.paint(data.sX, data.sY, data.eX, data.eY, data.c);
         });
     },
 
@@ -42,7 +42,7 @@ var Canvas = {
     },
 
     /**
-     * Send the canvas data to Firestore
+     * Send the paint action to Firestore
      * Our local listener will pick up the changes and draw them
      */
     drawLine: (startX, startY, endX, endY, color) => {
@@ -60,28 +60,50 @@ var Canvas = {
     },
 
     /**
-     * Actually put marks on the Canvas
+     * Send the erase action to Firestore
+     * Our local listener will pick up the changes and draw them
      */
-    paint: (sX, sY, eX, eY, color) => {
-        Canvas.context.beginPath();
-        Canvas.context.moveTo(sX, sY);
-        Canvas.context.lineTo(eX, eY);
-        Canvas.context.strokeStyle = color;
-        Canvas.context.stroke();
-        Canvas.context.closePath(); 
+    eraseLine: (startX, startY, endX, endY) => {
+        let hash = "" + startX + startY + endX + endY;
+        let dataRef = Firebase.database().ref(RoomState.Room_ID + "/canvas/" + hash);
+
+        dataRef.once("value", (snapshot) => {
+            if(snapshot.exists()){
+                dataRef.remove();
+            }else{
+                dataRef.set({
+                    sX: startX,
+                    sY: startY,
+                    eX: endX,
+                    eY: endY,
+                    c: "#ZZZ"
+                });
+            }
+        });
     },
 
     /**
-     * Repaint the whole Canvas - for when it Mithril.redraws();
+     * Actually put marks on the Canvas
      */
-    repaint: () =>{
-        Firebase.database().ref(RoomState.Room_ID + "/canvas").once("value").then( (snapshot) => {
-            snapshot.forEach( (childSnapshot) => {
-                let data = childSnapshot.val();
-                if(data == null){ return; }
-                Canvas.paint(data.sX, data.sY, data.eX, data.eY, data.c);
-            });
-        });
+    paint: (sX, sY, eX, eY, color) => {
+        // #ZZZ is our custom code for erase
+        if(color == "#ZZZ"){
+            Canvas.context.beginPath();
+            // Basically says to "extract" color from the canvas rather than inject color into (erase)
+            Canvas.context.globalCompositeOperation = "destination-out";
+            Canvas.context.arc(eX,eY,8,0,Math.PI*2,false);
+            Canvas.context.fill();
+            Canvas.context.closePath();
+        }else{
+            Canvas.context.beginPath();
+            // Inject color into or "overwrite" whatever is already there (normal drawing)
+            Canvas.context.globalCompositeOperation = "source-over";
+            Canvas.context.strokeStyle = color;
+            Canvas.context.moveTo(sX, sY);
+            Canvas.context.lineTo(eX, eY);
+            Canvas.context.stroke();
+            Canvas.context.closePath();
+        }
     }
 }
 
