@@ -53,7 +53,7 @@ var Queue = {
         * Create a document (queued item) in the queue collection
         */
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
-        .collection("queue").add({
+        .collection("queue").doc(Firebase.firestore.Timestamp.now().toMillis().toString()).set({
             vID: videoID,
             user: Session.getUid()
 
