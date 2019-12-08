@@ -97,6 +97,13 @@ var Queue = {
             }).catch( (err) => {
 
             })
+    },
+
+    remove: (videoID) => {
+        if(User.isModerator){
+            Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+            .collection("queue").doc(videoID).delete();
+        }
     }
 }
 
