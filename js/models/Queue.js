@@ -44,7 +44,7 @@ var Queue = {
          */
         let rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
         res = URL.match(rx);
-        if(res.length < 1){
+        if(typeof res == "undefined" || res == null || res.length < 1){
             return;
         }
 
@@ -53,7 +53,7 @@ var Queue = {
         * Create a document (queued item) in the queue collection
         */
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
-        .collection("queue").add({
+        .collection("queue").doc(Firebase.firestore.Timestamp.now().toMillis().toString()).set({
             vID: videoID,
             user: Session.getUid()
 

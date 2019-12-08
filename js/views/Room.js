@@ -6,6 +6,8 @@ var Chat = require("./../models/Chat");
 var Queue = require("../models/Queue");
 var Canvas = require("./../models/Canvas");
 var YTVideoFrame = require("./../models/YTVideoIframe");
+var QueueButton = require("./../views/components/VideoURLInput/QueueButton");
+var VideoURLTextbox = require("./../views/components/VideoURLInput/Textbox");
 
 var RoomNavigation = require("./components/VideoURLInput/RoomNavigation");
 var Toolbar = require("./components/Toolbar/Toolbar");
@@ -30,7 +32,13 @@ var Room = {
         RoomState.constructExisting(vnode.attrs.roomid);
         User.construct().then( () => {
             Chat.construct();
+            
             Queue.construct();
+            // Get URL from landing page textbox
+            if(QueueButton.getTitle().length > 0){
+                Queue.enqueue(QueueButton.getTitle());
+            }
+
             Canvas.construct();
             YTVideoFrame.construct();
             console.log("Snapshot Listeners Initialized!");
