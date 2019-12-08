@@ -134,10 +134,11 @@ var YTVideoFrame = {
             YTVideoFrame.Playback.video = "";
             
             let nextVideo = Queue.dequeue();
+            console.log(nextVideo);
             if(nextVideo != null){
-                YTVideoFrame.Playback.video = nextVideo.url;
+                YTVideoFrame.Playback.video = nextVideo.vID;
                 YTVideoFrame.updatePlaybackRemote(1);
-                YTVideoFrame.Player.loadVideoById(nextVideo.url);
+                YTVideoFrame.Player.loadVideoById(nextVideo.vID);
             }else{
                 Firebase.firestore().collection("room").doc(RoomState.Room_ID).update({
                     "playback.video": ""
