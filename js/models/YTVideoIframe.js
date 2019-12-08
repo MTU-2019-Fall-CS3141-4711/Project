@@ -13,14 +13,11 @@ var YTVideoFrame = {
     Player: null,
     PlayerState: { ENDED: 0, PLAYING: 1, PAUSED: 2, BUFFERING: 3 },
     Playback: { state: -1, time: 0, updated: 0, video: "" },
+    pendingSync: false,
     construct: () => {
 
+        YTVideoFrame.enableDisplay();
         let roomRef = Firebase.firestore().collection("room").doc(RoomState.Room_ID);
-
-        // Get current playback information
-        roomRef.get().then( (snapshot) => {
-            YTVideoFrame.Playback = snapshot.data().playback;
-        });
 
         // Host is playback state
         if(!User.isHost){
@@ -28,10 +25,13 @@ var YTVideoFrame = {
             roomRef.onSnapshot( (snapshot) => {
                 let data = snapshot.data().playback;
 
-                if(data.video != "" && data.video != YTVideoFrame.Playback.video){
+                // No video playing, don't try to load one.
+                if(data.video == ""){ return; }
+
+                if(data.video != YTVideoFrame.Playback.video){
                     YTVideoFrame.Playback = data;
                     YTVideoFrame.Player.loadVideoById(data.video).then( ()=> {
-                        YTVideoFrame.syncPlayback();
+                        YTVideoFrame.pendingSync = true;
                     });
                 }else{
                     YTVideoFrame.Playback = data;
@@ -40,11 +40,13 @@ var YTVideoFrame = {
             });
             
         }
-
-        YTVideoFrame.enableDisplay();
-
     },
 
+    /**
+     * Runs for all users
+     * Called during app initializiation to create the video player iframe
+     * and setup event listeners
+     */
     enableDisplay: () => { 
         YTVideoFrame.Player = YT('player', {
             playerVars: {
@@ -54,12 +56,17 @@ var YTVideoFrame = {
             }
         });
         YTVideoFrame.Player.setVolume(60);
-
-        // We don't need to track changes unless this is the host
+        
         if(User.isHost){
+            // If host, send playback change updates to firebase
             YTVideoFrame.Player.on('stateChange', (e) => {
                 YTVideoFrame.onVideoStateChange(e.data);
             });
+        }else{
+            // If not host, track playback changes so we know when to sychronize playback with the host
+            YTVideoFrame.Player.on('stateChange', (e) => {
+                YTVideoFrame.onVideoStateChangeLocalTrack(e.data);
+            })
         }
 
         YTVideoFrame.Player.on("error", (e) => {
@@ -67,15 +74,23 @@ var YTVideoFrame = {
         });
     },
 
-    startPlayerLocal: () => { YTVideoFrame.Player.playVideo(); },
-    pausePlayerLocal: () => { YTVideoFrame.Player.pauseVideo(); },
+    startPlayerLocal: () => { return YTVideoFrame.Player.playVideo(); },
+    pausePlayerLocal: () => { return YTVideoFrame.Player.pauseVideo(); },
+
+    /**
+     * Only runs for host
+     * Called when pull video out of queue and playing it from the start
+     */
     loadVideoLocal: (videoID) => { 
-        console.log(videoID);
         YTVideoFrame.Player.loadVideoById(videoID);
         YTVideoFrame.Playback = { state: 1, time: 0, updated: 0, video: videoID }; 
         YTVideoFrame.updatePlaybackRemote(1);
     },
 
+    /**
+     * Only runs for non-hosts
+     * Seek the user's video player to match the playback 
+     */
     syncPlayback: () => {
         if(YTVideoFrame.Playback.state == YTVideoFrame.PlayerState.PLAYING){
             // Check time since last timestamp update and add the difference to get current playback time
@@ -95,6 +110,10 @@ var YTVideoFrame = {
         }
     },
 
+    /**
+     * Only runs for host
+     * Called when host clicks to play / pause video
+     */
     togglePlaybackLocal: () => {
         YTVideoFrame.Player.getPlayerState().then( (state) => {
             if(state == YTVideoFrame.PlayerState.PLAYING){
@@ -102,12 +121,38 @@ var YTVideoFrame = {
             }else if(state == YTVideoFrame.PlayerState.PAUSED){
                 YTVideoFrame.startPlayerLocal();
             }
-    
-            // Video is loading so we're not going to try and play / pause it
-
         });
     },
 
+    /**
+     * Only registered to run on the host
+     * Sychronize video playback to Firestore
+     */
+    onVideoStateChange: (state) => {
+        var Queue = require("./Queue");
+        if(state == YTVideoFrame.PlayerState.ENDED){
+            YTVideoFrame.Playback.video = "";
+            
+            let nextVideo = Queue.dequeue();
+            console.log(nextVideo);
+            if(nextVideo != null){
+                YTVideoFrame.Playback.video = nextVideo.vID;
+                YTVideoFrame.updatePlaybackRemote(1);
+                YTVideoFrame.Player.loadVideoById(nextVideo.vID);
+            }else{
+                Firebase.firestore().collection("room").doc(RoomState.Room_ID).update({
+                    "playback.video": ""
+                });
+            }
+
+        }else if(state == YTVideoFrame.PlayerState.PAUSED || state == YTVideoFrame.PlayerState.BUFFERING || state == YTVideoFrame.PlayerState.PLAYING){
+            YTVideoFrame.updatePlaybackRemote(state);
+        }
+    },
+
+    /**
+     * Called by onVideoStateChange() to send playback information to Firestore
+     */
     updatePlaybackRemote: (state) => {
         YTVideoFrame.Player.getCurrentTime().then( (playbackTime) => {
             if(typeof playbackTime == "undefined"){
@@ -124,20 +169,15 @@ var YTVideoFrame = {
         });
     },
 
-    onVideoStateChange: (state) => {
-        var Queue = require("./Queue");
-        if(state == YTVideoFrame.PlayerState.ENDED){
-            YTVideoFrame.Playback.video = "";
-            
-            let nextVideo = Queue.dequeue();
-            if(nextVideo != null){
-                YTVideoFrame.Playback.video = nextVideo.url;
-                YTVideoFrame.updatePlaybackRemote(1);
-                YTVideoFrame.Player.loadVideoById(nextVideo.url);
-            }
-
-        }else if(state == YTVideoFrame.PlayerState.PAUSED || state == YTVideoFrame.PlayerState.BUFFERING || state == YTVideoFrame.PlayerState.PLAYING){
-            YTVideoFrame.updatePlaybackRemote(state);
+    /**
+     * Only registered to run on non-hosts
+     * Synchronize video playback with the host. (YTPlayer can't seek while buffering / loading)
+     * This may have terrible results on slow connections
+     */
+    onVideoStateChangeLocalTrack: (state) => {
+        if(state == YTVideoFrame.PlayerState.PLAYING && YTVideoFrame.pendingSync){
+            YTVideoFrame.pendingSync = false;
+            YTVideoFrame.syncPlayback();
         }
     },
 
