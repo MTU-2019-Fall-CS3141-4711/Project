@@ -14,8 +14,8 @@ var VideoQueue = {
             (typeof Queue.q == "object" && Queue.q.length > 0)?
                 Queue.q.map( (i) => {
                     return m(QueuedVideo, {
-                        videoID: i.docId,
-                        videoTitle: i.url,
+                        docId: i.docId,
+                        videoID: i.vID,
                         queueUser: RoomState.getUsername(i.user)
                     })
                 })

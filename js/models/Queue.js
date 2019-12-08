@@ -100,8 +100,10 @@ var Queue = {
     },
 
     remove: (videoID) => {
-        Firebase.firestore().collection("room").doc(RoomState.Room_ID)
-        .collection("queue").doc(videoID).delete();
+        if(User.isModerator){
+            Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+            .collection("queue").doc(videoID).delete();
+        }
     }
 }
 
