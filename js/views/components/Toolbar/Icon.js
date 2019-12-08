@@ -1,7 +1,5 @@
 var m = require("mithril");
 
-var ToolbarState = require("./../../../models/ToolbarState");
-var Toolbar = require("./Toolbar");
 /*
     Invidual tool icon
 */
@@ -10,12 +8,18 @@ var Icon = {
         if(typeof vnode.attrs.color == "undefined" || !vnode.attrs.color) {
             return m("i", {
                 class:"icon active-icon " + vnode.attrs.icon,
-                onclick: () => { ToolbarState.setTool(vnode.attrs.tool); }
+                onclick: () => { 
+                    var ToolbarState = require("./../../../models/ToolbarState");
+                    ToolbarState.setTool(vnode.attrs.tool); 
+                }
             });    
         } else {
             return m("i", {
                 class: "icon active-icon " + vnode.attrs.icon, 
-                onclick: () => {Toolbar.COLOR = 1;}
+                onclick: () => {
+                    var Toolbar = require("./Toolbar");
+                    Toolbar.COLOR = 1; 
+                }
             });
         }
         
