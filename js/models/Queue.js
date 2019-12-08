@@ -77,9 +77,7 @@ var Queue = {
             return nextVideo;
 
         }else{
-            console.error("Queue is empty and we cannot dequeue - Queue.js");
             return null;
-            
         }
     },
 
