@@ -13,9 +13,6 @@ var QueuedVideo = {
         
         videoID = "https://www.youtube.com/watch?v="+ vnode.attrs.videoID;
         user = vnode.attrs.queueUser;
-        if(videoID.length!=11){
-            return; // if ID is in any way, invalid, we do not do anything.
-        }
         
         return m("div", {class: "queued-video"},[
             m("img", { // contains the image 
