@@ -15,6 +15,7 @@ var YTVideoFrame = {
     Playback: { state: -1, time: 0, updated: 0, video: "" },
     construct: () => {
 
+        YTVideoFrame.enableDisplay();
         let roomRef = Firebase.firestore().collection("room").doc(RoomState.Room_ID);
 
         // Get current playback information
@@ -40,8 +41,6 @@ var YTVideoFrame = {
             });
             
         }
-
-        YTVideoFrame.enableDisplay();
 
     },
 
