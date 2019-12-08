@@ -24,7 +24,9 @@ let QueueButton = {
             onclick: (e) => {
                 var Queue = require("./../../../models/Queue");
                 var TextBox = require("./Textbox");
-                if(title.toLowerCase().startsWith("/")){ // possibly add other '/' commands
+                var User = require("./../../../models/User");
+                if(!User.isBanned) {
+                    if(title.toLowerCase().startsWith("/")){ // possibly add other '/' commands
                     if(title.toLowerCase()=="/clear"){
                         Queue.clearQueue();
                         VideoQueue.clearQueue();
@@ -33,6 +35,7 @@ let QueueButton = {
                     Queue.enqueue(title);
                 }
                 TextBox.clear(targ);
+                }
             },
             /*
                 onKeyPress ---- Keycode == 13

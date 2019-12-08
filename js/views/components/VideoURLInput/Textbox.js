@@ -29,8 +29,9 @@ let Textbox = {
             },
             onkeypress: function (e) {
                 var Queue = require("./../../../models/Queue");
+                var User = require("../../../models/User");
                 QueueButton.setTarg(e.target);
-                if(e.keyCode==13 && RoomState.Room_ID != null){
+                if(e.keyCode==13 && RoomState.Room_ID != null && !User.isBanned){
                     if(e.target.value.toLowerCase().startsWith("/")){ // possibly add other '/' commands
                         if(e.target.value.toLowerCase()=="/clear"){
                             Queue.clearQueue();
