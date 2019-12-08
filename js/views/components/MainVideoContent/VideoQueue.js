@@ -1,6 +1,6 @@
 var m = require("mithril");
 
- let RoomState = require("./../../../models/RoomState");
+let RoomState = require("./../../../models/RoomState");
 var Queue = require("../../../models/Queue");
 
 var QueuedVideo = require("./QueuedVideo");
@@ -11,7 +11,7 @@ var QueuedVideo = require("./QueuedVideo");
 var VideoQueue = {
     view: () => {
         return m("div", {class:"video-queue"},
-            (typeof Queue.q == "object")?
+            (typeof Queue.q == "object" && Queue.q.length > 0)?
                 Queue.q.map( (i) => {
                     return m(QueuedVideo, {
                         videoTitle: i.url,
@@ -19,7 +19,7 @@ var VideoQueue = {
                     })
                 })
             :
-                ""
+                m("h4", {style: "text-align:center; color: white;"}, "No Videos In Queue.")
         );
     }
 }
