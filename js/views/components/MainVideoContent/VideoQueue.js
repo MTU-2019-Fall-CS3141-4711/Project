@@ -16,7 +16,8 @@ var VideoQueue = {
                     return m(QueuedVideo, {
                         docId: i.docId,
                         videoID: i.vID,
-                        queueUser: RoomState.getUsername(i.user)
+                        queueUser: RoomState.getUsername(i.user),
+                        videoTitle: i.vTitle
                     })
                 })
             :

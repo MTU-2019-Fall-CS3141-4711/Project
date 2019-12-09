@@ -10,11 +10,14 @@ var User = require("../../../models/User");
  * To get the YT title (and description) we need to use the data api
  */
 var QueuedVideo = {
+    
     view: (vnode) => {
         // Quick way to hide the X if they're not a mod
-        // TODO: Use a propery condition to generate the vnode because this is ambigious.
-        let hideQueueModeration = "display:none";
-        if(User.isModerator){ hideQueueModeration = "display: inline;"}
+        // TODO: Use a propery condition to generate the vnode because this is ambiguous.
+        let hideQueueModeration = User.isModerator ? "display: inline" : "display:none";
+
+        
+        
 
         return m("div", {class: "queued-video"},[
             m("img", { // contains the image 
@@ -24,8 +27,8 @@ var QueuedVideo = {
                 "src":"https://i.ytimg.com/vi/"+vnode.attrs.videoID+"/mqdefault.jpg","alt":"Queued Video","height":"52","width":"92.44"
             }),
             m("div", {"class":"text-container"},[ // contains the following two text elements
-                m("div", {"class":"video-title"}, vnode.attrs.videoID),
-                m("div", {"class":"queued-by"}, vnode.attrs.queueUser),
+                m("div", {"class":"video-title"}, "Video Title: "+ vnode.attrs.videoTitle), //TODO: make this the title of the video
+                m("div", {"class":"queued-by"}, "Queued By: "+vnode.attrs.queueUser),
                 m("i",{
                     class: "far fa-times-circle", 
                     style: "cursor:pointer;" + hideQueueModeration,

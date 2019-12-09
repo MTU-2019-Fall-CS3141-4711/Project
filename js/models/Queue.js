@@ -25,7 +25,8 @@ var Queue = {
                     Queue.q.push({
                         docId: docRef.id,
                         vID: docRef.data().vID,
-                        user: docRef.data().user
+                        user: docRef.data().user,
+                        vTitle: docRef.data().vTitle
                     })
                 });
                 m.redraw();
@@ -37,7 +38,7 @@ var Queue = {
      * so that the queue triggering logic can go in YTVideoFrame because having it
      * here is messy, but faster to write for now.
      */
-    enqueue: (URL) =>{
+    enqueue: async (URL) =>{
         /**
          * Extracts video ideas from most YouTube URLs
          * Borowed from https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url/27728417#27728417
@@ -52,10 +53,12 @@ var Queue = {
         /**
         * Create a document (queued item) in the queue collection
         */
+        let videoTitle = await Queue.getVideoTitle(videoID);
         Firebase.firestore().collection("room").doc(RoomState.Room_ID)
         .collection("queue").doc(Firebase.firestore.Timestamp.now().toMillis().toString()).set({
             vID: videoID,
-            user: Session.getUid()
+            user: Session.getUid(),
+            vTitle: videoTitle
 
         }).then( () => {
             if(User.isHost && YTVideoFrame.Playback.video == ""){
@@ -65,7 +68,6 @@ var Queue = {
         });
     },
 
-    // not needed yet, but for will when we grab a new video from the queue
     dequeue: ()=>{
         if(Queue.q.length>0){
             let nextVideo = Queue.q.pop();
@@ -80,7 +82,17 @@ var Queue = {
             return null;
         }
     },
-
+    getVideoTitle: async (URLid) =>{
+        let videoTitle = "Video Title Not found";
+        let yt = "AIzaSyBMYIgSRvNZlfl-dsHMNPbXwgOzUbmuAbo";
+        await m.request({
+            method:"GET",
+            url: "https://www.googleapis.com/youtube/v3/videos?part=snippet&id="+URLid+"&key="+yt
+        }).then( (result)=> {
+            videoTitle = result.items[0].snippet.title;
+        });
+        return videoTitle;
+    },
     clearQueue: ()=>{
         /**
          * Get the documents (videos) in the queue and delete them one by one
