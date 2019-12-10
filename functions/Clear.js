@@ -2,14 +2,16 @@ var functions = require("firebase-functions");
 var admin = require("firebase-admin");
 
 /**
- * Everytime a user leaves the room, check if they are the last one
- * If they are, delete the room in both databases
+ * Checks if room is clear of users and deletes if so when called
  */
-exports.onUserLeaveRoom = functions.database.ref("{room_id}/users/{user_id}").onDelete(
-    async(snapshot, context) => {
+exports.clear = functions.https.onRequest(
+    async(req, res) => {
+        await admin.firestore().collection("room").get().then( async(snapshot) => {
+        snapshot.forEach(async(roomy) => {
         // Check if there are any entires in the user list
         let hasUsers = true;
-        await admin.database().ref(context.params.room_id + "/users").once("value")
+        let room_id = roomy.id;
+        await admin.database().ref(room_id).once("value")
             .then( (snapshot) => {
                 hasUsers = snapshot.hasChildren();
             });
@@ -19,12 +21,12 @@ exports.onUserLeaveRoom = functions.database.ref("{room_id}/users/{user_id}").on
             /**
              *   Delete the userlist in the Realtime Database
              */
-            await admin.database().ref(context.params.room_id).remove();
+            await admin.database().ref(room_id).remove();
 
             /**
              *  Delete the room in Firestore 
              */
-            let roomRef = admin.firestore().collection("room").doc(context.params.room_id);
+            let roomRef = admin.firestore().collection("room").doc(room_id);
             
             
             // Delete all the users (there shouldn't be any, but we're doing it anyway)
@@ -73,6 +75,15 @@ exports.onUserLeaveRoom = functions.database.ref("{room_id}/users/{user_id}").on
 
             // Delete the room itself
             await roomRef.delete();
-        }
+            
+            console.log("Cleared "+room_id);
+        }else{console.log(room_id + " survived clear")}
+        
+    });
+    
+});
+    //send http response to prevent timeout
+    res.status(200).send('Cleared');
+    return;
     }
 );

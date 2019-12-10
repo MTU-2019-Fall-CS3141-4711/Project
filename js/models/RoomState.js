@@ -23,7 +23,8 @@ var RoomState = {
                 playback: {
                     state: -1,
                     time: 0,
-                    last_update: 0
+                    last_update: 0,
+                    video: ""
                 },
                 host: Session.getUid()
             }).then( async (docRefence)=> {

@@ -1,10 +1,9 @@
 let m = require("mithril");
 let Firebase = require("firebase/app");
 let RoomState = require("./RoomState");
-var Session = require("../models/Session");
-var VideoQueue = require("./../views/components/MainVideoContent/VideoQueue");
-
-// Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+var Session = require("./Session");
+var User = require("./User");
+var YTVideoFrame = require("./YTVideoIframe");
 
 var Queue = {
     q: [],
@@ -24,32 +23,75 @@ var Queue = {
                 Queue.q = [];
                 snapshot.docs.forEach( (docRef) => {
                     Queue.q.push({
-                        url: docRef.data().url,
-                        user: docRef.data().user
+                        docId: docRef.id,
+                        vID: docRef.data().vID,
+                        user: docRef.data().user,
+                        vTitle: docRef.data().vTitle
                     })
                 });
                 m.redraw();
-                //console.log(snapshot);
-            });
-    },
-    enqueue: (URL) =>{
-        /**
-         * Create a document (queued item) in the queue collection
-         */
-        Firebase.firestore().collection("room").doc(RoomState.Room_ID)
-            .collection("queue").add({
-                url: URL,
-                user: Session.getUid()
             });
     },
 
-    // not needed yet, but for will when we grab a new video from the queue
-    dequeue: ()=>{
-        if(arrayQueue.length>0){
-            return arrayQueue.pop();
-        }else{
-            console.error("Queue is empty and we cannot dequeue - Queue.js");
+    /**
+     * Optional TODO: The queue should implement an observable design paradigm
+     * so that the queue triggering logic can go in YTVideoFrame because having it
+     * here is messy, but faster to write for now.
+     */
+    enqueue: async (URL) =>{
+        /**
+         * Extracts video ideas from most YouTube URLs
+         * Borowed from https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url/27728417#27728417
+         */
+        let rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
+        res = URL.match(rx);
+        if(typeof res == "undefined" || res == null || res.length < 1){
+            return;
         }
+
+        let videoID = res[1];
+        /**
+        * Create a document (queued item) in the queue collection
+        */
+        let videoTitle = await Queue.getVideoTitle(videoID);
+        Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+        .collection("queue").doc(Firebase.firestore.Timestamp.now().toMillis().toString()).set({
+            vID: videoID,
+            user: Session.getUid(),
+            vTitle: videoTitle
+
+        }).then( () => {
+            if(User.isHost && YTVideoFrame.Playback.video == ""){
+                YTVideoFrame.loadVideoLocal(Queue.dequeue().vID);
+            }
+
+        });
+    },
+
+    dequeue: ()=>{
+        if(Queue.q.length>0){
+            let nextVideo = Queue.q.pop();
+            
+            //Delete the video from the queue
+            Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+            .collection("queue").doc(nextVideo.docId).delete();
+            
+            return nextVideo;
+
+        }else{
+            return null;
+        }
+    },
+    getVideoTitle: async (URLid) =>{
+        let videoTitle = "Video Title Not found";
+        let yt = "AIzaSyBMYIgSRvNZlfl-dsHMNPbXwgOzUbmuAbo";
+        await m.request({
+            method:"GET",
+            url: "https://www.googleapis.com/youtube/v3/videos?part=snippet&id="+URLid+"&key="+yt
+        }).then( (result)=> {
+            videoTitle = result.items[0].snippet.title;
+        });
+        return videoTitle;
     },
     clearQueue: ()=>{
         /**
@@ -65,6 +107,13 @@ var Queue = {
             }).catch( (err) => {
 
             })
+    },
+
+    remove: (videoID) => {
+        if(User.isModerator){
+            Firebase.firestore().collection("room").doc(RoomState.Room_ID)
+            .collection("queue").doc(videoID).delete();
+        }
     }
 }
 
