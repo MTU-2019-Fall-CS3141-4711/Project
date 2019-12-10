@@ -2,8 +2,6 @@ var m = require("mithril");
 
 var ToolbarState = require("./../../../models/ToolbarState");
 
-var Icon = require("./Icon");
-
 var White = require("./Colors/White");
 var Black = require("./Colors/Black");
 var Green = require("./Colors/Green");
@@ -23,6 +21,7 @@ var Toolbar = {
         ToolbarState.construct();
     },
     view: (vnode) => {
+        var Canvas = require("./../../../models/Canvas");
         var Icon = require("./Icon");
         if(Toolbar.COLOR == 0) {
             return m("div", {class:"toolbar"},
@@ -30,7 +29,12 @@ var Toolbar = {
                     m(Icon,{icon:"fas fa-mouse-pointer", tool: ToolbarState.POINTER}),
                     m(Icon,{icon:"fas fa-paint-brush", tool: ToolbarState.BRUSH}),
                     m(Icon,{icon:"fas fa-eraser", tool: ToolbarState.ERASER}),
-                    m(Icon, {icon:"fas fa-palette", color: true})
+                    m(Icon, {icon:"fas fa-palette", color: true}),
+                    m("i", {
+                        class: "icon active-icon fas fa-bullseye",
+                        style: "color: red;",
+                        onclick: () => { Canvas.clearCanvas(); }
+                    })
                 ])
             );
         } else if(Toolbar.COLOR == 1) {
