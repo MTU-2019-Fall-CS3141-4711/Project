@@ -6,7 +6,12 @@ var PardonButton = {
             onclick: () => {
                 var User = require("../../../models/User");
                 var ModPopUp = require("./ModPopUp");
+                var Chat = require("../../../models/Chat");
                 User.pardonUser(ModPopUp.user);
+                pardoneduser = ModPopUp.username;
+                message = " has been pardoned.";
+                message = pardoneduser + message;
+                Chat.sendMessage(message, "informative");
             }    
     })
     }

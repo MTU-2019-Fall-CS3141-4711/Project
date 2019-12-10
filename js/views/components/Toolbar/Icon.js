@@ -1,5 +1,6 @@
 var m = require("mithril");
 
+var User = require("../../../models/User");
 /*
     Invidual tool icon
 */
@@ -9,6 +10,8 @@ var Icon = {
             return m("i", {
                 class:"icon active-icon " + vnode.attrs.icon,
                 onclick: () => { 
+                    if(User.isBannedFunc()){return;}
+                    
                     var ToolbarState = require("./../../../models/ToolbarState");
                     ToolbarState.setTool(vnode.attrs.tool); 
                 }

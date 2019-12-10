@@ -23,6 +23,7 @@ var User = {
         banRef.get().then( (docSnapshot) => {
                 if(docSnapshot.exists){
                     User.banned = true;
+                    console.log("banRef is running");
                 }else{
                     User.banned = false;
                 }
@@ -177,6 +178,12 @@ var User = {
         });
 
         return username;
+    },
+    isBannedFunc: () => {
+        return User.isBanned;
+    },
+    isModdedFunc: () => {
+        return User.isModerator;
     }
 }
 
