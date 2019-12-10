@@ -33,7 +33,7 @@ var Toolbar = {
                     m("i", {
                         class: "icon active-icon fas fa-bullseye",
                         style: "color: red;",
-                        onclick: () => { console.log("Clearing:"); Canvas.clearCanvas(); }
+                        onclick: () => { Canvas.clearCanvas(); }
                     })
                 ])
             );

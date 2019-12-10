@@ -112,7 +112,6 @@ var Canvas = {
      * Wipe the drawing canvas
      */
     clearCanvas: () => {
-        console.log(User.isModerator);
         if(User.isModerator){
             Firebase.database().ref(RoomState.Room_ID + "/canvas").remove();
         }
