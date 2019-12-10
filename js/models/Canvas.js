@@ -2,12 +2,11 @@ var Firebase = require("firebase/app");
 require("firebase/database");
 
 var RoomState = require("./RoomState");
+var User = require("./User");
 
 var Canvas = {
     isDrawing: false,
     context: null,
-    width: 1,
-    height: 1,
     sX: 0,
     sY: 0,
     construct: () => {
@@ -27,6 +26,12 @@ var Canvas = {
             if(data == null){ return; }
             Canvas.paint(data.sX, data.sY, data.eX, data.eY, data.c);
         });
+
+        Firebase.database().ref(RoomState.Room_ID).on("child_removed", (snapshot) =>{
+            if(!snapshot.hasChild("canvas")){
+                Canvas.context.clearRect(0, 0, Canvas.context.canvas.clientWidth, Canvas.context.canvas.clientHeight);
+            }
+        });
     },
 
     /**
@@ -35,10 +40,7 @@ var Canvas = {
      */
     registerCanvas: (c) => {
         Canvas.context = c.getContext("2d");
-        Canvas.context.strokeStyle = 'black';
         Canvas.context.lineWidth = 4;
-        Canvas.width = c.clientHeight;
-        Canvas.height = c.clientWidth;
     },
 
     /**
@@ -103,6 +105,16 @@ var Canvas = {
             Canvas.context.lineTo(eX, eY);
             Canvas.context.stroke();
             Canvas.context.closePath();
+        }
+    },
+
+    /**
+     * Wipe the drawing canvas
+     */
+    clearCanvas: () => {
+        console.log(User.isModerator);
+        if(User.isModerator){
+            Firebase.database().ref(RoomState.Room_ID + "/canvas").remove();
         }
     }
 }
