@@ -49,9 +49,9 @@ var DrawingCanvas = {
                     let x = Math.floor(e.clientX - rel.left);
                     let y = Math.floor(e.clientY - rel.top);
                     
-                    if(ToolbarState.getTool() == ToolbarState.BRUSH && !User.isBanned){
+                    if(ToolbarState.getTool() == ToolbarState.BRUSH){
                         Canvas.drawLine(Canvas.sX, Canvas.sY, x, y, ToolbarState.CURRENTCOLOR);
-                    }else if(ToolbarState.getTool() == ToolbarState.ERASER && !User.isBanned){
+                    }else if(ToolbarState.getTool() == ToolbarState.ERASER){
                         Canvas.eraseLine(Canvas.sX, Canvas.sY, x, y);
                     }
                 }

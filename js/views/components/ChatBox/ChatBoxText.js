@@ -1,14 +1,13 @@
 var m = require("mithril");
 
 var Chat = require("./../../../models/Chat");
-var User = require("../../../models/User");
 
 var ChatBoxText = {
     textarea: null,
     view: () => {
         ChatBoxText.textarea = m("textarea", {class:"chatboxtext",
             onkeyup: (e) => {
-                if(e.keyCode == 13 && !User.isBanned){
+                if(e.keyCode == 13){
                     var msg = ChatBoxText.getTextAreaMessage();
                     if(msg.trim().length!=0){
                         Chat.sendMessage( msg, "regular" );
